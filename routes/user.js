@@ -1,7 +1,9 @@
 const express = require('express')
 const app = express()
 const client = require('../models/connection')
-const client_envio = require('../models/recepcaonabd')
+//const client_envio = require('../models/recepcaonabd')
+const client_envio = require('../models/connection')
+
 const {compileTrust} = require("express/lib/utils");
 
 const getutilizadortipo = (req,res)=>{
