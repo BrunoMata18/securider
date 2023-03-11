@@ -4,6 +4,25 @@ const client = require('../models/connection')
 const client_envio = require('../models/recepcaonabd')
 const {compileTrust} = require("express/lib/utils");
 
+const getutilizadortipo = (req,res)=>{
+  try {
+  client.query('select * from utilizador_tipo',(error,results)=>{
+    if(error)
+    {
+      throw error
+    }
+    res.status(200).json(results)
+  })
+}
+catch (e) {
+  console.log(e);
+  response.status(200).json("error")
+}
+finally {
+  console.log("success");
+}
+}
+
 //get all
 const getutilizador = (req,res)=>{
   try {
@@ -153,5 +172,6 @@ module.exports = {
   login,
   createutilizador,
   userdelete,
-  updateuser
+  updateuser,
+  getutilizadortipo
 }

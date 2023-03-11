@@ -25,7 +25,7 @@ app.post('/login',users.login)
 app.post('/registar',users.createutilizador)
 app.post('/delete',users.userdelete)
 app.post('/updateuser',users.updateuser)
-
+app.get('/utilizador/tipo', users.getutilizadortipo)
 
 
 
