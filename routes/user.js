@@ -69,7 +69,8 @@ const createutilizador = (request, response) => {
   try {
   const users = request.body
   console.log(users)
-  const query = 'INSERT INTO utilizador (utilizador_nome,utilizador_email,utilizador_pass) VALUES (AES_ENCRYPT( "'+ users.nome.toString() +'" , "key1234"),AES_ENCRYPT( "'+ users.email.toString() +'" , "key1234") ,AES_ENCRYPT( "'+users.pass.toString()+'" , "key1234"))';
+  const query = 'INSERT INTO users (utilizador_username, utilizador_password, utilizador_ddd, utilizador_telemovel, utilizador_email, utilizador_pontos_sem, utilizador_moedas, utilizador_pontos_totais, utilizador_tipo_id) VALUES ("'+ users.utilizador_username.toString() +'", AES_ENCRYPT( "'+ users.utilizador_password.toString() +'" , "key1234"), "'+ users.utilizador_ddd.toString() +'", "'+ users.utilizador_telemovel.toString() +'", "'+ users.utilizador_email.toString() +'", "'+ users.utilizador_pontos_sem.toString() +'", "'+ users.utilizador_moedas.toString() +'", "'+ users.utilizador_pontos_totais.toString() +'", "'+ users.utilizador_tipo_id.toString() +'")';
+
   console.log(query)
   client_envio.query(query, (error, results) => {
     if (error) {
@@ -86,6 +87,32 @@ finally {
   console.log("success");
 }
 }
+
+const createtrilha = (request, response) => {
+  try {
+    const trilha = request.body
+    const recompensa_inicial = 0
+    const dificuldade_inicial_id = 4
+    const trilha_aprovada_default = false
+    const trilha_possui_local_default = false
+    console.log(trilha)
+    const query = 'INSERT INTO trilha (trilha_nome, trilha_descricao, trilha_recompensa_pontos, trilha_preco_pontos, trilha_data_criacao, trilha_aprovada, trilha_possui_local, trilha_criador_id, trilha_dificuldade_id) VALUES ("'+ trilha.trilha_nome.toString() +'", "'+ trilha.trilha_descricao.toString() +'", "'+ recompensa_inicial +'", "'+ trilha.trilha_preco_pontos.toString() +'", NOW(), '+ trilha_aprovada_default +', '+ trilha_possui_local_default +', "'+ trilha.trilha_criador_id.toString() +'", "'+ dificuldade_inicial_id +'")';
+
+    console.log(query)
+    client_envio.query(query, (error, results) => {
+      if (error) {
+        throw error
+      }
+      response.status(201).send("Trilha added with ID: " + results.insertId)
+    })
+  } catch (e) {
+    console.log(e);
+    response.status(500).json({error: e.message})
+  } finally {
+    console.log("success");
+  }
+}
+
 
 
 
@@ -192,5 +219,6 @@ module.exports = {
   userdelete,
   updateuser,
   getutilizadortipo,
-  getutilizadorId
+  getutilizadorId,
+  createtrilha
 }
