@@ -168,12 +168,12 @@ const getutilizadorId = (req, res) => {
   const userId = req.params.id; // obtém o ID do usuário a partir da URL
 
   try {
-    client.query('SELECT * FROM users WHERE id = $1', [userId], (error, results) => {
-      if (error) {
-        throw error;
+    client.query('SELECT * FROM users WHERE utilizador_id = ?', [userId], (error, results) => {
+      if(error)
+      {
+        throw error
       }
-
-      res.status(200).json(results.rows[0]);
+      res.status(200).json(results)
     });
   } catch (e) {
     console.log(e);

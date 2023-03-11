@@ -26,8 +26,8 @@ app.post('/registar',users.createutilizador)
 app.post('/delete',users.userdelete)
 app.post('/updateuser',users.updateuser)
 app.get('/utilizador/tipo', users.getutilizadortipo)
-app.get('/utilizador/:id', users.getutilizadorId);
-
+app.get('/utilizador/:id', users.getutilizadorId)
+app.get('/utilizador/')
 
 
 
