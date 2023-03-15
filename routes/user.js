@@ -372,12 +372,18 @@ const getutilizadorId = (req, res) => {
 
 
 module.exports = {
-  getutilizador,
-  login,
   createutilizador,
+  getutilizadortipo,
+  getutilizador,
+  getnovidades,
+  getutilizadorLoja,
+  getutilizadorParaRepetir,
+  getutilizadorMinhasTrilhas,
+  getutilizadorPontos,
+  getutilizadorUsername,
+  login,
+  createtrilha,
   userdelete,
   updateuser,
-  getutilizadortipo,
-  getutilizadorId,
-  createtrilha
+  getutilizadorId
 }
