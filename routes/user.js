@@ -323,42 +323,24 @@ const createtrilha = (request, response) => {
 
 
 
-const userdelete = (request, response) => {
-  const users = request.body
+const userdelete = (req, res) => {
+  const userId = req.params.id; // obtém o ID do usuário a partir da URL
 
-  const query1 = 'SELECT !ISNULL((SELECT ISNULL(utilizador_id) FROM votenow.utilizador where utilizador_email = AES_ENCRYPT( "'+ users.email.toString() +'" , "key1234") and  utilizador_pass = AES_ENCRYPT( "'+users.pass.toString()+'" , "key1234")))as existe';
-  const del = 'DELETE FROM votenow.utilizador where utilizador_email = AES_ENCRYPT( "'+ users.email.toString() +'" , "key1234")';
   try {
-    client.query(query1, (error, results) => {
-      if (error) {throw error}
-      if(!(results[0].existe==1))
+    client.query('DELETE FROM users WHERE utilizador_id = ?', [userId], (error, results) => {
+      if(error)
       {
-        client_envio.query(del, (error, results3) => {
-          if (error) {throw error}
-          response.status(200).json(results3)
-        })
+        throw error
       }
-      else
-      {
-        if((users.email==users.email)) {
-
-          client_envio.query(del, (error, results3) => {
-            if (error) {throw error }
-            response.status(200).json(results3)
-          })
-
-        }
-      }
-    })
-  }
-  catch (e) {
+      res.status(200).json(results)
+    });
+  } catch (e) {
     console.log(e);
-    response.status(200).json("error")
+    res.status(500).json("Erro ao obter o usuário");
+  } finally {
+    console.log("Sucesso!");
   }
-  finally {
-    console.log("success");
-  }
-}
+};
 
 const updateuser = (request, response) => {
   try {
