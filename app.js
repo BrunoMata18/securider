@@ -20,7 +20,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //utilizador
 const users = require('./routes/user')
-app.post('/login', users.login)
+app.post('/utilizador/login', users.login)
 app.post('/utilizador/registar', users.createutilizador)
 app.post('/utilizador/delete/:id', users.userdelete)
 app.post('/utilizador/updateuser/:id', users.updateuser)
