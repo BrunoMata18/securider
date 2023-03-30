@@ -292,7 +292,7 @@ const getReportInfo = (req, res) => {
     const reportId = req.params.id; // obtém o ID do usuário a partir da URL
   
     try {
-      client.query('SELECT u.utilizador_username, tp.trilha_ponto_inicio, tp.trilha_ponto_destino, tp.trilha_inicio, tp.trilha_destino, t.trilha_nome FROM trilha_report tr JOIN trilha t ON tr.trilha_identifier = t.trilha_id JOIN users u ON t.trilha_criador_id = u.utilizador_id JOIN trilha_place tp ON t.trilha_id = tp.trilha_identifier WHERE tr.trilha_report_id = ?', [reportId], (error, results) => {
+      client.query('SELECT u.utilizador_username, u.utilizador_id ,tp.trilha_ponto_inicio, tp.trilha_ponto_destino, tp.trilha_inicio, tp.trilha_destino, t.trilha_nome, t.trilha_id FROM trilha_report tr JOIN trilha t ON tr.trilha_identifier = t.trilha_id JOIN users u ON t.trilha_criador_id = u.utilizador_id JOIN trilha_place tp ON t.trilha_id = tp.trilha_identifier WHERE tr.trilha_report_id = ?', [reportId], (error, results) => {
         if(error)
         {
           throw error

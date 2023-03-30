@@ -54,7 +54,8 @@ app.get('/trilha/numeroReports/:id', trilhas.getNumberReportsTrilha)
 app.get('/trilha/reportInfo/:id', trilhas.getReportInfo)
 app.get('/trilha/trilhaIncompleta/:id', trilhas.getEditTrilha)
 app.get('/trilha/trilhasAprovar', trilhas.getnotaprovedtrilhas)
-app.get('/trilha/utilizador/completas', trilhas.getnumerocompletasuser)
+app.get('/trilha/utilizador/completas/:id', trilhas.getnumerocompletasuser)
+
 
 
 //embates
@@ -66,7 +67,7 @@ app.post('/embate/pontosSemanais', embates.getUpdatePontosSemanalUtilizador)
 app.post('/embate/moedas', embates.getUpdateMoedasUtilizador)
 app.post('/embate/resetPontosSemanais', embates.getResetPontosSemanalUtilizador)
 app.get('/embate', embates.getembates)
-
+app.post('/trilha/criarReport', embates.createreport)
 
 
 

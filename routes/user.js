@@ -215,19 +215,64 @@ const getutilizadorUsername = (req, res) => {
 
 //////// LOGIN DO UTILIZADOR ///////
 
+const login = (request, response) => {
+  try {
+    const users = request.body;
+    console.log("user: " + JSON.stringify(users));
+
+    client.query(
+      'SELECT utilizador_id, utilizador_password FROM utilizador WHERE utilizador_username = $1',
+      [users.utilizador_username],
+      (error, results) => {
+        if (error) {
+          throw error;
+        }
+
+        if (results.rows.length > 0) {
+          const hash = results.rows[0].utilizador_password;
+          const userId = results.rows[0].utilizador_id;
+
+          bcrypt.compare(users.utilizador_password, hash, function (err, res) {
+            if (res === true) {
+              response.status(200).json({ message: "Login successful", userId });
+            } else {
+              response
+                .status(401)
+                .json({ message: "Incorrect email or password" });
+            }
+          });
+        } else {
+          response
+            .status(401)
+            .json({ message: "Incorrect email or password" });
+        }
+      }
+    );
+  } catch (e) {
+    console.log(e);
+    response.status(500).json({ message: "An error occurred" });
+  }
+};
+
+
+
+/*LOGIN - 1º VERSÃO DA FUNÇÃO
+
 const login= (request, response) => {
   try {
     const users = request.body
     console.log("user:  "+JSON.stringify(users))
-    
+
+
+
     client.query('SELECT utilizador_password FROM utilizador WHERE utilizador_username = ("'+ users.utilizador_username.toString() +'")', (error, results) => {
       if (error) {
         throw error
       }
-      
+
       if (results.rows.length > 0) {
         const hash = results.rows[0].utilizador_password
-        
+
         bcrypt.compare(users.utilizador_password, hash, function(err, res) {
           if (res === true) {
             response.status(200).json({ message: 'Login successful' })
@@ -244,6 +289,9 @@ const login= (request, response) => {
     response.status(500).json({ message: 'An error occurred' })
   }
 }
+
+
+*/
 
 
 

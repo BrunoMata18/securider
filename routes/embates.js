@@ -202,6 +202,34 @@ const getResetPontosSemanalUtilizador = (req, res) => {
     }
 };
 
+/*CRIAR REPORT - TERMINAR*/
+
+const createreport = (request, response) => {
+  try {
+    const report = request.body;
+
+    console.log(report);
+  
+    /*TERMINAR*/
+    const query = 'INSERT INTO report (embate_local, embate_data, embate_local_latitude, embate_local_longitude) VALUES ("'+ trilha_completada + '", "'+ trilha.trilha_adquirida_uti_id.toString() +'", "'+ trilha.trilha_adquirida_trilha_id.toString() + '")';
+
+    console.log(query);
+
+    client_envio.query(query, (error, results) => {
+      if (error) {
+        throw error;
+      }
+
+      response.status(201).send("Trilha added with ID: " + results.insertId);
+    });
+  } catch (e) {
+    console.log(e);
+    response.status(500).json({ error: e.message });
+  } finally {
+    console.log("success");
+  }
+};
+
 module.exports = {
     getembates,
     deleteEmbate,
@@ -209,5 +237,6 @@ module.exports = {
     getUpdatePontosTotalUtilizador,
     getUpdatePontosSemanalUtilizador,
     getUpdateMoedasUtilizador,
-    getResetPontosSemanalUtilizador
+    getResetPontosSemanalUtilizador,
+    createreport
   }
