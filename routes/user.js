@@ -221,7 +221,7 @@ const login = (request, response) => {
     console.log("user: " + JSON.stringify(users));
 
     client.query(
-      'SELECT utilizador_id, utilizador_password FROM users WHERE utilizador_username = $1',
+      'SELECT utilizador_id, utilizador_password FROM users WHERE utilizador_username = ?',
       [users.utilizador_username],
       (error, results) => {
         if (error) {
