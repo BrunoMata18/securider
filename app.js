@@ -34,6 +34,7 @@ app.get('/utilizador/trilhas/repetir/:id', users.getutilizadorParaRepetir)
 app.get('/utilizador/trilhas/minhasTrilhas/:id', users.getutilizadorMinhasTrilhas)
 app.get('/utilizador/pontos/meusPontos/:id', users.getutilizadorPontos)
 app.get('/utilizador/nome/:id', users.getutilizadorUsername)
+app.get('/utilizador/leaderboard/', users.getutilizadorleaderboard)
 
 //trilhas
 const trilhas = require('./routes/trilha')

@@ -78,6 +78,28 @@ finally {
 }
 }
 
+///////// OBTER TODOS OS 50 PRIMEIROS UTILIZADORES (LEADERBOARD) /////////
+
+const getutilizadorleaderboard = (req,res)=>{
+  try {
+  client.query('select * from users order by utilizador_pontos_sem DESC;',(error,results)=>{
+    if(error)
+    {
+      throw error
+    }
+    res.status(200).json(results)
+  })
+}
+catch (e) {
+  console.log(e);
+  response.status(200).json("error")
+}
+finally {
+  console.log("success");
+}
+}
+
+
 ///////// OBTER NOVIDADES ////////
 
 const getnovidades = (req,res)=>{
@@ -415,5 +437,6 @@ module.exports = {
   createtrilha,
   userdelete,
   updateuser,
-  getutilizadorId
+  getutilizadorId,
+  getutilizadorleaderboard
 }
