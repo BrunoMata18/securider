@@ -78,6 +78,26 @@ finally {
 }
 }
 
+/////////// OBTER TODOS OS UTILIZADORES 2 ////////////
+const getutilizador2 = (req,res)=>{
+  try {
+  client.query('select * from users',(error,results)=>{
+    if(error)
+    {
+      throw error
+    }
+    res.status(200).json(results)
+  })
+}
+catch (e) {
+  console.log(e);
+  response.status(200).json("error")
+}
+finally {
+  console.log("success");
+}
+}
+
 ///////// OBTER TODOS OS 50 PRIMEIROS UTILIZADORES (LEADERBOARD) /////////
 
 const getutilizadorleaderboard = (req,res)=>{
@@ -440,5 +460,6 @@ module.exports = {
   userdelete,
   updateuser,
   getutilizadorId,
-  getutilizadorleaderboard
+  getutilizadorleaderboard,
+  getutilizador2
 }
