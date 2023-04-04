@@ -12,7 +12,7 @@ const {compileTrust} = require("express/lib/utils");
 
 const getembates = (req,res)=>{
     try {
-    client.query('SELECT e.embate_id, e.embate_data , e.embate_local_latitude, e.embate_local_longitude FROM embate e ORDER BY e.embate_data DESC',(error,results)=>{
+    client.query('SELECT e.embate_id, e.embate_data, e.embate_local_latitude, e.embate_local_longitude FROM embate e ORDER BY e.embate_data DESC',(error,results)=>{
       if(error)
       {
         throw error
