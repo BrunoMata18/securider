@@ -61,7 +61,7 @@ finally {
 /////////// OBTER TODOS OS UTILIZADORES ////////////
 const getutilizador = (req,res)=>{
   try {
-  client.query('select * from users order by utilizador_pontos_sem DESC',(error,results)=>{
+  client.query('select * from users',(error,results)=>{
     if(error)
     {
       throw error
@@ -81,7 +81,7 @@ finally {
 /////////// OBTER TODOS OS UTILIZADORES 2 ////////////
 const getutilizador2 = (req,res)=>{
   try {
-  client.query('select * from users',(error,results)=>{
+  client.query('select * from users order by utilizador_pontos_sem DESC',(error,results)=>{
     if(error)
     {
       throw error
