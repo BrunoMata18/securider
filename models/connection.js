@@ -7,6 +7,8 @@ var conn = mysql.createPool({
     port: '3306'
 });
 
+//CODE FOR THE OTHER DATABASE
+
 /*
 var mysql = require('mysql');
 var conn = mysql.createPool({
