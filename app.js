@@ -64,7 +64,7 @@ app.post('/utilizador/removerlike/:idtrilha/:idutilizador', users.userdeletelike
 
 /////OBTER DETALHES DA CONTA - NUMERO DE TRILHAS COMPLETAS/////
 
-app.get('/utilizador/get/trilhas/completas/count', users.getnumbercompletas)
+app.get('/utilizador/get/trilhas/completas/count/:id', users.getnumbercompletas)
 
 ///// ADQUIRIR UMA TRILHA /////
 
@@ -78,7 +78,10 @@ app.post('/utilizador/report/trilha', users.createtrilhareport)
 
 app.post('/utilizador/update/user/type/:newtype/:id', users.updateusertype)
 
+/////////////////////////////////QUERIES DE TRILHAS///////////////////////////////////
 
+const trilhas = require('./routes/trilha')
+app.get('/trilha/reports', trilhas.getreports)
 
 /*trilhas
 const trilhas = require('./routes/trilha')
