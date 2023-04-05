@@ -119,7 +119,7 @@ finally {
 
 ///////// OBTER TODOS OS 50 PRIMEIROS UTILIZADORES (LEADERBOARD) /////////
 
-const getutilizadorleaderboard = (req,res)=>{
+const getutilizador5 = (req,res)=>{
   try {
   client.query('select * from users order by utilizador_pontos_sem DESC',(error,results)=>{
     if(error)
@@ -479,7 +479,7 @@ module.exports = {
   userdelete,
   updateuser,
   getutilizadorId,
-  getutilizadorleaderboard,
+  getutilizador5,
   getutilizador2,
   getutilizador3
 }
