@@ -98,6 +98,25 @@ finally {
 }
 }
 
+const getutilizador3 = (req,res)=>{
+  try {
+  client.query('SELECT * FROM trilha WHERE trilha_possui_local = true AND trilha_aprovada = true ORDER BY trilha_data_criacao DESC',(error,results)=>{
+    if(error)
+    {
+      throw error
+    }
+    res.status(200).json(results)
+  })
+}
+catch (e) {
+  console.log(e);
+  response.status(200).json("error")
+}
+finally {
+  console.log("success");
+}
+}
+
 ///////// OBTER TODOS OS 50 PRIMEIROS UTILIZADORES (LEADERBOARD) /////////
 
 const getutilizadorleaderboard = (req,res)=>{
@@ -461,5 +480,6 @@ module.exports = {
   updateuser,
   getutilizadorId,
   getutilizadorleaderboard,
-  getutilizador2
+  getutilizador2,
+  getutilizador3
 }
