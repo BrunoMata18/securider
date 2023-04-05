@@ -473,13 +473,10 @@ const userdeletelike = (req, res) => {
 
 const createtrilhalike = (request, response) => {
   try {
-    const trilha = request.body
-    const recompensa_inicial = 0
-    const dificuldade_inicial_id = 4
-    const trilha_aprovada_default = false
-    const trilha_possui_local_default = false
+    const trilha_like = request.body
+
     console.log(trilha)
-    const query = 'INSERT INTO trilha (trilha_nome, trilha_descricao, trilha_recompensa_pontos, trilha_preco_pontos, trilha_data_criacao, trilha_aprovada, trilha_possui_local, trilha_criador_id, trilha_dificuldade_id) VALUES ("'+ trilha.trilha_nome.toString() +'", "'+ trilha.trilha_descricao.toString() +'", "'+ recompensa_inicial +'", "'+ trilha.trilha_preco_pontos.toString() +'", NOW(), '+ trilha_aprovada_default +', '+ trilha_possui_local_default +', "'+ trilha.trilha_criador_id.toString() +'", "'+ dificuldade_inicial_id +'")';
+    const query = 'INSERT INTO trilha_like (trilha_like_uti_id, trilha_like_trilha_id) VALUES ('+ trilha_like.trilha_like_uti_id +', '+ trilha_like.trilha_like_trilha_id + ")'";
 
     console.log(query)
     client_envio.query(query, (error, results) => {
@@ -495,6 +492,57 @@ const createtrilhalike = (request, response) => {
     console.log("success");
   }
 }
+
+/////////// COMPRAR TRILHA ////////////
+
+const createtrilhaadquirida = (request, response) => {
+  try {
+    const trilha_adquirida = request.body
+    const trilha_completada = false;
+
+    console.log(trilha)
+    const query = 'INSERT INTO trilha_adquirida (trilha_completada, trilha_adquirida_uti_id, trilha_adquirida_trilha_id) VALUES ('+ trilha_completada +', '+ trilha_adquirida.trilha_adquirida_uti_id + ' , ' + trilha_adquirida.trilha_adquirida_trilha_id +")'";
+
+    console.log(query)
+    client_envio.query(query, (error, results) => {
+      if (error) {
+        throw error
+      }
+      response.status(201).send("Trilha added with ID: " + results.insertId)
+    })
+  } catch (e) {
+    console.log(e);
+    response.status(500).json({error: e.message})
+  } finally {
+    console.log("success");
+  }
+}
+
+////////// REPORTAR UMA TRILHA //////////
+
+const createtrilhareport = (request, response) => {
+  try {
+    const trilha_report = request.body
+  
+
+    console.log(trilha)
+    const query = 'INSERT INTO trilha_report (trilha_report_date, trilha_identifier) VALUES (' + 'NOW(), '+ trilha_report.trilha_identifier + ")'";
+
+    console.log(query)
+    client_envio.query(query, (error, results) => {
+      if (error) {
+        throw error
+      }
+      response.status(201).send("Trilha added with ID: " + results.insertId)
+    })
+  } catch (e) {
+    console.log(e);
+    response.status(500).json({error: e.message})
+  } finally {
+    console.log("success");
+  }
+}
+
 
 ///////////UPDATE MOEDAS, PONTOS SEMANAIS E TOTAIS //////////////
 
@@ -599,6 +647,9 @@ const updateuser = (request, response) => {
   }
 }
 
+///// OBTER: username, email, pontos totais (depois com base nos pontos exibir o nivel)
+
+
 const getutilizadorid = (req, res) => {
   const userId = req.params.id; // obtém o ID do usuário a partir da URL
 
@@ -617,6 +668,49 @@ const getutilizadorid = (req, res) => {
     console.log("Sucesso!");
   }
 };
+
+const getnumbercompletas = (req, res) => {
+  const userId = req.params.id; // obtém o ID do usuário a partir da URL
+
+  try {
+    client.query('SELECT COUNT(*) AS num_trilhas_completas FROM trilha_adquirida WHERE trilha_completada = true AND trilha_adquirida_uti_id = ?', [userId], (error, results) => {
+      if(error)
+      {
+        throw error
+      }
+      res.status(200).json(results)
+    });
+  } catch (e) {
+    console.log(e);
+    res.status(500).json("Erro ao obter o usuário");
+  } finally {
+    console.log("Sucesso!");
+  }
+};
+
+/////////////////////// MUDAR TIPOS DE UTILIZADOR //////////////////////
+
+const updateusertype = (req, res) => {
+  const userId = req.params.id; // obtém o ID do usuário a partir da URL
+  const newtype = req.params.newtype;
+
+  try {
+    client.query('UPDATE users SET utilizador_tipo_id = ? WHERE utilizador_id = ?', [newtype, userId], (error, results) => {
+      if(error)
+      {
+        throw error
+      }
+      res.status(200).json(results)
+    });
+  } catch (e) {
+    console.log(e);
+    res.status(500).json("Erro ao obter o usuário");
+  } finally {
+    console.log("Sucesso!");
+  }
+};
+
+////////////////////////////////////////////////////////////////////////
 
 
 module.exports = {
@@ -637,9 +731,15 @@ module.exports = {
   getutilizador5,//
   getutilizador2,//
   getnovidades, //
-  getutilizadormoedas,
-  updateusermoedas,
-  updateuserpontossemanais,
-  updateuserpontostotais,
-  getutilizadorfavoritos
+  getutilizadormoedas, //
+  updateusermoedas, //
+  updateuserpontossemanais, //
+  updateuserpontostotais, //
+  getutilizadorfavoritos,//
+  createtrilhalike, //
+  userdeletelike, //
+  getnumbercompletas, //
+  createtrilhaadquirida, //
+  createtrilhareport, //
+  updateusertype //
 }

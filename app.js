@@ -52,15 +52,31 @@ app.get('/utilizador/get/username/:id', users.getutilizadorusername)
 app.get('/utilizador/get/:id', users.getutilizadorid)
 app.post('/utilizador/delete/:id', users.userdelete)
 app.get('/utilizador/get/allmoedas/:id', users.getutilizadormoedas)
-app.post('/utilizador/update/moedas/:id', users.updateusermoedas)
-app.post('/utilizador/update/pontos/semanais/:id', users.updateuserpontossemanais)
-app.post('/utilizador/update/pontos/totais/:id', users.updateuserpontostotais)
+app.post('/utilizador/update/moedas/:id/:quantity', users.updateusermoedas)
+app.post('/utilizador/update/pontos/semanais/:id/:quantity', users.updateuserpontossemanais)
+app.post('/utilizador/update/pontos/totais/:id/:quantity', users.updateuserpontostotais)
 app.get('/utilizador/get/trilha/favoritos/:id', users.getutilizadorfavoritos)
 
 //DEIXAR E REMOVER LIKE/
 
-app.post('/utilizador/darlike/:idtrilha/:idutilizador', users.addlike)
-app.post('/utilizador/removerlike/:idtrilha/:idutilizador', users.removelike)
+app.post('/utilizador/darlike', users.createtrilhalike)
+app.post('/utilizador/removerlike/:idtrilha/:idutilizador', users.userdeletelike)
+
+/////OBTER DETALHES DA CONTA - NUMERO DE TRILHAS COMPLETAS/////
+
+app.get('/utilizador/get/trilhas/completas/count', users.getnumbercompletas)
+
+///// ADQUIRIR UMA TRILHA /////
+
+app.post('/utilizador/adquirir/trilha', users.createtrilhaadquirida)
+
+////// ENVIAR REPORT PARA UMA TRILHA ///////
+
+app.post('/utilizador/report/trilha', users.createtrilhareport)
+
+////// MUDAR TIPOS DE UTILIZADOR (SE ALGUEM SE TORNAR MODERADOR/PREMIUM) ///////
+
+app.post('/utilizador/update/user/type/:newtype/:id', users.updateusertype)
 
 
 
