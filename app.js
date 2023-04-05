@@ -39,6 +39,30 @@ app.get('/utilizador/pontos/meusPontos/:id', users.getutilizadorPontos)
 app.get('/utilizador/nome/:id', users.getutilizadorUsername)
 app.get('/utilizador/5', users.getutilizador5)
 */
+app.get('/utilizador/get/tipo', users.getutilizadortipo)
+app.get('/utilizador/get/all', users.getutilizador)
+app.post('/utilizador/registar', users.createutilizador)
+app.get('/utilizador/get/leaderboard', users.getutilizador2)
+app.get('/trilha/get/novidades', users.getnovidades)
+app.get('/trilha/get/loja/:id', users.getloja)
+app.get('/trilha/get/pararepetir/:id', users.getpararepetir)
+app.get('/trilha/get/minhastrilhas/:id', users.getminhastrilhas)
+app.get('/utilizador/get/allpontos/:id', users.getutilizadorpontos)
+app.get('/utilizador/get/username/:id', users.getutilizadorusername)
+app.get('/utilizador/get/:id', users.getutilizadorid)
+app.post('/utilizador/delete/:id', users.userdelete)
+app.get('/utilizador/get/allmoedas/:id', users.getutilizadormoedas)
+app.post('/utilizador/update/moedas/:id', users.updateusermoedas)
+app.post('/utilizador/update/pontos/semanais/:id', users.updateuserpontossemanais)
+app.post('/utilizador/update/pontos/totais/:id', users.updateuserpontostotais)
+app.get('/utilizador/get/trilha/favoritos/:id', users.getutilizadorfavoritos)
+
+//DEIXAR E REMOVER LIKE/
+
+app.post('/utilizador/darlike/:idtrilha/:idutilizador', users.addlike)
+app.post('/utilizador/removerlike/:idtrilha/:idutilizador', users.removelike)
+
+
 
 /*trilhas
 const trilhas = require('./routes/trilha')

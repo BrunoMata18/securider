@@ -98,9 +98,32 @@ finally {
 }
 }
 
-const getutilizador3 = (req,res)=>{
+const getnovidades = (req,res)=>{
   try {
   client.query('SELECT * FROM trilha WHERE trilha_possui_local = true AND trilha_aprovada = true ORDER BY trilha_data_criacao DESC',(error,results)=>{
+    if(error)
+    {
+      throw error
+    }
+    res.status(200).json(results)
+  })
+}
+catch (e) {
+  console.log(e);
+  response.status(200).json("error")
+}
+finally {
+  console.log("success");
+}
+}
+
+///////////////// OBTER FAVORITOS DE UM UTILIZADOR //////////////////
+
+const getutilizadorfavoritos = (req,res)=>{
+  const userId = req.params.id; // obtém o ID do usuário a partir da URL
+
+  try {
+  client.query('SELECT trilha_like_id, trilha_like_uti_id, trilha_like_trilha_id, trilha_id, trilha_nome, trilha_recompensa_pontos FROM trilha_like INNER JOIN trilha ON trilha.trilha_id = trilha_like.trilha_like_trilha_id WHERE trilha_like_uti_id = ?', [userId],(error,results)=>{
     if(error)
     {
       throw error
@@ -166,11 +189,11 @@ finally {
 //////// OBTER ITEMS DA LOJA ////////
 
 
-const getutilizadorLoja = (req, res) => {
+const getloja = (req, res) => {
   const userId = req.params.id; // obtém o ID do usuário a partir da URL
 
   try {
-    client.query('SELECT * FROM trilha WHERE trilha_possui_local = true  AND trilha_aprovada = true AND trilha_id NOT IN (SELECT trilha_adquirida_id FROM trilha_adquirida WHERE trilha_adquirida_uti_id = ?' + 'ORDER BY trilha_data_criacao DESC;', [userId], (error, results) => {
+    client.query('SELECT * FROM trilha WHERE trilha_possui_local = true  AND trilha_aprovada = true AND trilha_id NOT IN (SELECT trilha_adquirida_id FROM trilha_adquirida WHERE trilha_adquirida_uti_id = ?)' + 'ORDER BY trilha_data_criacao DESC;', [userId], (error, results) => {
       if(error)
       {
         throw error
@@ -187,7 +210,7 @@ const getutilizadorLoja = (req, res) => {
 
 ///////// OBTER PARA REPETIR /////////
 
-const getutilizadorParaRepetir = (req, res) => {
+const getpararepetir = (req, res) => {
   const userId = req.params.id; // obtém o ID do usuário a partir da URL
 
   try {
@@ -209,7 +232,7 @@ const getutilizadorParaRepetir = (req, res) => {
 ///////// OBTER AS TRILHAS DO UTILIZADOR //////////
 
 
-const getutilizadorMinhasTrilhas = (req, res) => {
+const getminhastrilhas = (req, res) => {
   const userId = req.params.id; // obtém o ID do usuário a partir da URL
 
   try {
@@ -232,7 +255,7 @@ const getutilizadorMinhasTrilhas = (req, res) => {
 ///////// OBTER OS PONTOS DO UTILIZADOR PELO ID (PARA QUE NO ANDROID SEJA CALCULADO O NIVEL) ///////////
 
 
-const getutilizadorPontos = (req, res) => {
+const getutilizadorpontos = (req, res) => {
   const userId = req.params.id; // obtém o ID do usuário a partir da URL
 
   try {
@@ -251,9 +274,28 @@ const getutilizadorPontos = (req, res) => {
   }
 };
 
+const getutilizadormoedas = (req, res) => {
+  const userId = req.params.id; // obtém o ID do usuário a partir da URL
+
+  try {
+    client.query('SELECT utilizador_moedas FROM users WHERE utilizador_id = ?', [userId], (error, results) => {
+      if(error)
+      {
+        throw error
+      }
+      res.status(200).json(results)
+    });
+  } catch (e) {
+    console.log(e);
+    res.status(500).json("Erro ao obter o usuário");
+  } finally {
+    console.log("Sucesso!");
+  }
+};
+
 ////////// OBTER O NOME DO UTILIZADOR PELO ID (PARA QUE SEJA EXIBIDO NO NA HOMEPAGE) ////////////
 
-const getutilizadorUsername = (req, res) => {
+const getutilizadorusername = (req, res) => {
   const userId = req.params.id; // obtém o ID do usuário a partir da URL
 
   try {
@@ -405,6 +447,120 @@ const userdelete = (req, res) => {
   }
 };
 
+///////////REMOVER LIKE//////////
+
+const userdeletelike = (req, res) => {
+  const userId = req.params.id; // obtém o ID do usuário a partir da URL
+  const trilhaId = req.params.trilhaid;
+
+  try {
+    client.query('DELETE FROM trilha_like WHERE trilha_like_uti_id = ? AND trilha_like_trilha_id = ?', [userId, trilhaId], (error, results) => {
+      if(error)
+      {
+        throw error
+      }
+      res.status(200).json(results)
+    });
+  } catch (e) {
+    console.log(e);
+    res.status(500).json("Erro ao obter o usuário");
+  } finally {
+    console.log("Sucesso!");
+  }
+};
+
+////// ADICIONAR LIKE - TERMINAR //////
+
+const createtrilhalike = (request, response) => {
+  try {
+    const trilha = request.body
+    const recompensa_inicial = 0
+    const dificuldade_inicial_id = 4
+    const trilha_aprovada_default = false
+    const trilha_possui_local_default = false
+    console.log(trilha)
+    const query = 'INSERT INTO trilha (trilha_nome, trilha_descricao, trilha_recompensa_pontos, trilha_preco_pontos, trilha_data_criacao, trilha_aprovada, trilha_possui_local, trilha_criador_id, trilha_dificuldade_id) VALUES ("'+ trilha.trilha_nome.toString() +'", "'+ trilha.trilha_descricao.toString() +'", "'+ recompensa_inicial +'", "'+ trilha.trilha_preco_pontos.toString() +'", NOW(), '+ trilha_aprovada_default +', '+ trilha_possui_local_default +', "'+ trilha.trilha_criador_id.toString() +'", "'+ dificuldade_inicial_id +'")';
+
+    console.log(query)
+    client_envio.query(query, (error, results) => {
+      if (error) {
+        throw error
+      }
+      response.status(201).send("Trilha added with ID: " + results.insertId)
+    })
+  } catch (e) {
+    console.log(e);
+    response.status(500).json({error: e.message})
+  } finally {
+    console.log("success");
+  }
+}
+
+///////////UPDATE MOEDAS, PONTOS SEMANAIS E TOTAIS //////////////
+
+
+const updateusermoedas = (req, res) => {
+  const userId = req.params.id; // obtém o ID do usuário a partir da URL
+  const newquantity = req.params.quantity;
+
+  try {
+    client.query('UPDATE users SET utilizador_moedas = ? WHERE utilizador_id = ?', [newquantity, userId], (error, results) => {
+      if(error)
+      {
+        throw error
+      }
+      res.status(200).json(results)
+    });
+  } catch (e) {
+    console.log(e);
+    res.status(500).json("Erro ao obter o usuário");
+  } finally {
+    console.log("Sucesso!");
+  }
+};
+
+const updateuserpontostotais = (req, res) => {
+  const userId = req.params.id; // obtém o ID do usuário a partir da URL
+  const newquantity = req.params.quantity;
+
+  try {
+    client.query('UPDATE users SET utilizador_pontos_totais = ? WHERE utilizador_id = ?', [newquantity, userId], (error, results) => {
+      if(error)
+      {
+        throw error
+      }
+      res.status(200).json(results)
+    });
+  } catch (e) {
+    console.log(e);
+    res.status(500).json("Erro ao obter o usuário");
+  } finally {
+    console.log("Sucesso!");
+  }
+};
+
+const updateuserpontossemanais = (req, res) => {
+  const userId = req.params.id; // obtém o ID do usuário a partir da URL
+  const newquantity = req.params.quantity;
+
+  try {
+    client.query('UPDATE users SET utilizador_pontos_sem = ? WHERE utilizador_id = ?', [newquantity, userId], (error, results) => {
+      if(error)
+      {
+        throw error
+      }
+      res.status(200).json(results)
+    });
+  } catch (e) {
+    console.log(e);
+    res.status(500).json("Erro ao obter o usuário");
+  } finally {
+    console.log("Sucesso!");
+  }
+};
+
+////////////////////////////////////////////////////////////////////
+
 const updateuser = (request, response) => {
   try {
     const users = request.body
@@ -443,7 +599,7 @@ const updateuser = (request, response) => {
   }
 }
 
-const getutilizadorId = (req, res) => {
+const getutilizadorid = (req, res) => {
   const userId = req.params.id; // obtém o ID do usuário a partir da URL
 
   try {
@@ -463,23 +619,27 @@ const getutilizadorId = (req, res) => {
 };
 
 
-
 module.exports = {
-  createutilizador,
-  getutilizadortipo,
-  getutilizador,
-  getutilizador4,
-  getutilizadorLoja,
-  getutilizadorParaRepetir,
-  getutilizadorMinhasTrilhas,
-  getutilizadorPontos,
-  getutilizadorUsername,
-  login,
+  createutilizador, //
+  getutilizadortipo, //
+  getutilizador, //
+  getutilizador4,//
+  getloja, //
+  getpararepetir, //
+  getminhastrilhas,//
+  getutilizadorpontos,
+  getutilizadorusername, //
+  login, //
   createtrilha,
   userdelete,
   updateuser,
-  getutilizadorId,
-  getutilizador5,
-  getutilizador2,
-  getutilizador3
+  getutilizadorid,//
+  getutilizador5,//
+  getutilizador2,//
+  getnovidades, //
+  getutilizadormoedas,
+  updateusermoedas,
+  updateuserpontossemanais,
+  updateuserpontostotais,
+  getutilizadorfavoritos
 }
