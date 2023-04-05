@@ -143,7 +143,7 @@ finally {
 
 ///////// OBTER NOVIDADES ////////
 
-const getnovidades = (req,res)=>{
+const getutilizador4 = (req,res)=>{
   try {
   client.query('SELECT * FROM trilha WHERE trilha_possui_local = true AND trilha_aprovada = true ORDER BY trilha_data_criacao DESC; ',(error,results)=>{
     if(error)
@@ -468,7 +468,7 @@ module.exports = {
   createutilizador,
   getutilizadortipo,
   getutilizador,
-  getnovidades,
+  getutilizador4,
   getutilizadorLoja,
   getutilizadorParaRepetir,
   getutilizadorMinhasTrilhas,
