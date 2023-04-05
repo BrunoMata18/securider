@@ -21,6 +21,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //utilizador
 const users = require('./routes/user')
 app.post('/utilizador/login', users.login)
+/*
 app.post('/utilizador/registar', users.createutilizador)
 app.post('/utilizador/delete/:id', users.userdelete)
 app.post('/utilizador/updateuser/:id', users.updateuser)
@@ -37,8 +38,9 @@ app.get('/utilizador/trilhas/minhasTrilhas/:id', users.getutilizadorMinhasTrilha
 app.get('/utilizador/pontos/meusPontos/:id', users.getutilizadorPontos)
 app.get('/utilizador/nome/:id', users.getutilizadorUsername)
 app.get('/utilizador/5', users.getutilizador5)
+*/
 
-//trilhas
+/*trilhas
 const trilhas = require('./routes/trilha')
 app.post('/trilha/delete/local/:id', trilhas.deleteTrilhaPlace)
 app.post('/trilha/delete/trilhaAdquirida/:id', trilhas.createtrilhaadquirida)
@@ -59,9 +61,9 @@ app.get('/trilha/trilhaIncompleta/:id', trilhas.getEditTrilha)
 app.get('/trilha/trilhasAprovar', trilhas.getnotaprovedtrilhas)
 app.get('/trilha/utilizador/completas/:id', trilhas.getnumerocompletasuser)
 
+*/
 
-
-//embates
+/*embates
 const embates = require('./routes/embates')
 app.post('/embate/delete', embates.deleteEmbate)
 app.post('/embate/criarEmbate', embates.createuserembate)
@@ -72,7 +74,7 @@ app.post('/embate/resetPontosSemanais', embates.getResetPontosSemanalUtilizador)
 app.get('/embate', embates.getembates)
 app.post('/trilha/criarReport', embates.createreport)
 
-
+*/
 
 
 
