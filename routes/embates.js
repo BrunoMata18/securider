@@ -12,7 +12,7 @@ const {compileTrust} = require("express/lib/utils");
 
 const getembates = (req,res)=>{
     try {
-    client.query('SELECT e.embate_id, e.embate_data, e.embate_local_latitude, e.embate_local_longitude FROM embate e ORDER BY e.embate_data DESC',(error,results)=>{
+    client.query('SELECT e.embate_id, e.embate_local ,e.embate_data, e.embate_local_latitude, e.embate_local_longitude FROM embate e ORDER BY e.embate_data DESC',(error,results)=>{
       if(error)
       {
         throw error
@@ -31,7 +31,7 @@ const getembates = (req,res)=>{
 
 ////////////////////////////// APAGAR UM EMBATE PELO ID //////////////////////////////
 
-const deleteEmbate = (req, res) => {
+const deleteembate = (req, res) => {
     const embateId = req.params.id; // obtém o ID do usuário a partir da URL
   
     try {
@@ -92,7 +92,8 @@ const createuserembate = (request, response) => {
   
       console.log(trilha);
     
-      const query = 'INSERT INTO embate (embate_local, embate_data, embate_local_latitude, embate_local_longitude) VALUES (ST_GeomFromText("POINT(' + trilha.embate_local_longitude + ' ' + trilha.embate_local_latitude + ')"), NOW() ,' + trilha.embate_local_latitude + ', ' + trilha.embate_local_longitude + ')';
+      const query = 'INSERT INTO embate (embate_local, embate_data, embate_local_latitude, embate_local_longitude) VALUES ("' + trilha.embate_local + '", NOW() , ' + trilha.embate_local_latitude + ',' + trilha.embate_local_longitude + ')';
+
 
       console.log(query);
   
@@ -232,7 +233,7 @@ const createreport = (request, response) => {
 
 module.exports = {
     getembates,
-    deleteEmbate,
+    deleteembate,
     createuserembate,
     getUpdatePontosTotalUtilizador,
     getUpdatePontosSemanalUtilizador,

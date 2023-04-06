@@ -161,7 +161,26 @@ app.post('/trilha/delete/favoritos/user/:userid/:id', trilhas.deletealltrilhafav
 
 ////////////////////////// MÉTODOS DE EMBATES ///////////////////////////
 
+//////////////// OBTER OS EMBATES ////////////////
 
+const embates = require('./routes/embates')
+
+app.get('/embate/get/all', embates.getembates)
+
+app.post('/embate/create', embates.createuserembate)
+
+app.get('/embate/delete/:id', embates.deleteembate)
+
+/*app.post('/embate/delete', embates.deleteEmbate)
+app.post('/embate/criarEmbate', embates.createuserembate)
+app.post('/embate/pontosTotais', embates.getUpdatePontosTotalUtilizador)
+app.post('/embate/pontosSemanais', embates.getUpdatePontosSemanalUtilizador)
+app.post('/embate/moedas', embates.getUpdateMoedasUtilizador)
+app.post('/embate/resetPontosSemanais', embates.getResetPontosSemanalUtilizador)
+app.get('/embate', embates.getembates) --------------------------------------------------
+app.post('/trilha/criarReport', embates.createreport)
+
+*/
 
 
 /*trilhas
@@ -186,23 +205,6 @@ app.get('/trilha/trilhasAprovar', trilhas.getnotaprovedtrilhas)
 app.get('/trilha/utilizador/completas/:id', trilhas.getnumerocompletasuser)
 
 */
-
-/*embates
-const embates = require('./routes/embates')
-app.post('/embate/delete', embates.deleteEmbate)
-app.post('/embate/criarEmbate', embates.createuserembate)
-app.post('/embate/pontosTotais', embates.getUpdatePontosTotalUtilizador)
-app.post('/embate/pontosSemanais', embates.getUpdatePontosSemanalUtilizador)
-app.post('/embate/moedas', embates.getUpdateMoedasUtilizador)
-app.post('/embate/resetPontosSemanais', embates.getResetPontosSemanalUtilizador)
-app.get('/embate', embates.getembates)
-app.post('/trilha/criarReport', embates.createreport)
-
-*/
-
-
-
-
 
 module.exports = app;
 
