@@ -86,11 +86,11 @@ const deleteTrilhaPlace = (req, res) => {
   };
 
   
-  const deleteTrilhaReport = (req, res) => {
-    const trilhaId = req.params.id; // obtém o ID do usuário a partir da URL
+  const deletereport = (req, res) => {
+    const reportId = req.params.id; // obtém o ID do usuário a partir da URL
   
     try {
-      client.query('DELETE FROM trilha_report WHERE trilha_identifier = ?', [trilhaId], (error, results) => {
+      client.query('DELETE FROM trilha_report WHERE trilha_report_id = ?', [reportId], (error, results) => {
         if(error)
         {
           throw error
@@ -127,12 +127,12 @@ const deleteTrilhaPlace = (req, res) => {
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  const updateTrilhaCompleta = (req, res) => {
-    const trilhaId = req.params.trilha_id; // obtém o ID do usuário a partir da URL
-    const userId = req.params.user_id;
+  const updatetrilhacompleta = (req, res) => {
+    const trilhaId = req.params.trilhaid; // obtém o ID do usuário a partir da URL
+    const userId = req.params.userid;
   
     try {
-      client.query('UPDATE trilha_adquirida SET trilha_completada = true WHERE trilha_id = ?' + ' AND utilizador_id = ?', [trilhaId, userId], (error, results) => {
+      client.query('UPDATE trilha_adquirida SET trilha_completada = true WHERE trilha_adquirida_trilha_id = ?' + ' AND trilha_adquirida_uti_id = ?', [trilhaId, userId], (error, results) => {
         if(error)
         {
           throw error
@@ -221,7 +221,7 @@ const deleteTrilhaPlace = (req, res) => {
 
   const getreports = (req,res)=>{
     try {
-    client.query('SELECT * FROM trilha_report ORDER BY trilha_report_date DESC;',(error,results)=>{
+    client.query('SELECT trilha_report_id, trilha_report_date, trilha_identifier, trilha_nome FROM trilha_report INNER JOIN trilha ON trilha.trilha_id = trilha_report.trilha_identifier ORDER BY trilha_report_date DESC',(error,results)=>{
       if(error)
       {
         throw error
@@ -263,11 +263,37 @@ const deleteTrilhaPlace = (req, res) => {
       console.log("success");
     }
   }
+  
+  ////////// CRIAR UMA TRILHA //////////
 
+  const createtrilha = (request, response) => {
+    try {
+      const trilha = request.body
+
+      const trilha_possui_local = false;
+      const trilha_aprovada = false;
+  
+      const query = 'INSERT INTO trilha (trilha_nome, trilha_descricao, trilha_recompensa_pontos, trilha_preco_pontos, trilha_data_criacao, trilha_aprovada, trilha_possui_local, trilha_criador_id, trilha_dificuldade_id) VALUES ("'+ trilha.trilha_nome + '", "'+ trilha.trilha_descricao +'", '+ trilha.trilha_recompensa_pontos +', '+ trilha.trilha_preco_pontos +', NOW(), '+ trilha_aprovada +', '+ trilha_possui_local +', '+ trilha.trilha_criador_id +', '+ trilha.trilha_dificuldade_id +')';
+    
+      console.log(query)
+      client_envio.query(query, (error, results) => {
+        if (error) {
+          throw error
+        }
+        response.status(201).send("Trilha added with ID: " + results.insertId)
+      })
+    } catch (e) {
+      console.log(e);
+      response.status(500).json({error: e.message})
+    } finally {
+      console.log("success");
+    }
+  }
+  
 
 //////////// OBTER NUMERO DE REPORTS DE UMA TRILHA PELO ID DA TRILHA ////////////
 
-const getNumberReportsTrilha = (req, res) => {
+const getnumberreportstrilha = (req, res) => {
     const trilhaId = req.params.id; // obtém o ID do usuário a partir da URL
   
     try {
@@ -288,7 +314,7 @@ const getNumberReportsTrilha = (req, res) => {
 
 /////////////////// OBTER DETALHES AO ABRIR UM REPORT (SOBRE A TRILHA REPORTADA) /////////////////////
 
-const getReportInfo = (req, res) => {
+const getreportinfo = (req, res) => {
     const reportId = req.params.id; // obtém o ID do usuário a partir da URL
   
     try {
@@ -311,11 +337,32 @@ const getReportInfo = (req, res) => {
 
 ////////////////////// OBTER TODAS AS TRILHAS JÁ CRIADAS E QUE AINDA NÃO POSSUEM UM LOCAL ADICIONADO (PARA APARECER NUMA LISTA PARA EDITAR O LOCAL) ////////////////////////////
 
-const getEditTrilha = (req, res) => {
+const getedittrilha = (req, res) => {
     const userId = req.params.id; // obtém o ID do usuário a partir da URL
   
     try {
       client.query('SELECT trilha_id, trilha_nome, trilha_descricao, trilha_recompensa_pontos, trilha_preco_pontos, trilha_data_criacao, trilha_aprovada, trilha_dificuldade_id, trilha_criador_id FROM trilha WHERE trilha_possui_local = false AND trilha_criador_id = ?', [userId], (error, results) => {
+        if(error)
+        {
+          throw error
+        }
+        res.status(200).json(results)
+      });
+    } catch (e) {
+      console.log(e);
+      res.status(500).json("Erro ao obter o usuário");
+    } finally {
+      console.log("Sucesso!");
+    }
+  };
+
+  /////////////////////// OBTER DETALHES DE UMA TRILHA \\\\\\\\\\\\\\\\\\\\\\\\\\
+
+  const getdetailstrilha = (req, res) => {
+    const trilhaId = req.params.id; // obtém o ID do usuário a partir da URL
+  
+    try {
+      client.query('SELECT trilha_id, trilha_nome, trilha_descricao, trilha_recompensa_pontos, trilha_preco_pontos, trilha_data_criacao, trilha_aprovada, trilha_possui_local, trilha_criador_id, trilha_dificuldade_id, trilha_local_id, trilha_inicio, trilha_destino, trilha_ponto_inicio, trilha_ponto_destino, trilha_identifier, trilha_ponto_inicio_latitude, trilha_ponto_inicio_longitude, trilha_ponto_destino_latitude, trilha_ponto_destino_longitude FROM trilha INNER JOIN trilha_place ON trilha_identifier = trilha.trilha_id WHERE trilha.trilha_id = ?', [trilhaId], (error, results) => {
         if(error)
         {
           throw error
@@ -397,7 +444,7 @@ const getnotaprovedtrilhas = (req,res)=>{
 
   ////////////////////////////////// APROVAR UMA TRILHA PELO ID ///////////////////////////////
 
-  const getUpdateTrilhaAprovacao = (req, res) => {
+  const getupdatetrilhaaprovacao = (req, res) => {
     const trilhaId = req.params.id; // obtém o ID do usuário a partir da URL
   
     try {
@@ -437,6 +484,67 @@ const getnumerocompletasuser = (req, res) => {
       console.log("Sucesso!");
     }
   };
+
+
+  const getnumerolikestrilha = (req, res) => {
+    const trilhaId = req.params.id; // obtém o ID do usuário a partir da URL
+  
+    try {
+      client.query('SELECT COUNT(*) AS num_likes FROM trilha_like WHERE trilha_like_trilha_id = ?', [trilhaId], (error, results) => {
+        if(error)
+        {
+          throw error
+        }
+        res.status(200).json(results)
+      });
+    } catch (e) {
+      console.log(e);
+      res.status(500).json("Erro ao obter o usuário");
+    } finally {
+      console.log("Sucesso!");
+    }
+  };
+
+  const getutilizadorcheckcompradotrilha = (req, res) => {
+    const userId = req.params.id; // obtém o ID do usuário a partir da URL
+    const trilhaId = req.params.idtrilha;
+
+    try {
+      client.query('SELECT EXISTS (SELECT 1 FROM trilha_adquirida WHERE trilha_adquirida.trilha_adquirida_trilha_id = ? AND trilha_adquirida.trilha_adquirida_uti_id = ?) AS comprou_trilha;', [trilhaId , userId], (error, results) => {
+        if(error)
+        {
+          throw error
+        }
+        res.status(200).json(results)
+      });
+    } catch (e) {
+      console.log(e);
+      res.status(500).json("Erro ao obter o usuário");
+    } finally {
+      console.log("Sucesso!");
+    }
+  };
+
+  const getutilizadorcheckliketrilha = (req, res) => {
+    const userId = req.params.id; // obtém o ID do usuário a partir da URL
+    const trilhaId = req.params.idtrilha;
+
+    try {
+      client.query('SELECT EXISTS (SELECT 1 FROM trilha_like WHERE trilha_like.trilha_like_trilha_id = ? AND trilha_like.trilha_like_uti_id = ?) AS deixou_like_trilha;', [trilhaId , userId], (error, results) => {
+        if(error)
+        {
+          throw error
+        }
+        res.status(200).json(results)
+      });
+    } catch (e) {
+      console.log(e);
+      res.status(500).json("Erro ao obter o usuário");
+    } finally {
+      console.log("Sucesso!");
+    }
+  };
+
   
 
   module.exports = {
@@ -445,22 +553,27 @@ const getnumerocompletasuser = (req, res) => {
     deleteTrilhaAdquirida,
     deleteTrilhaFavorito,
     deleteTrilhaLike,
-    deleteTrilhaReport,
+    deletereport,//
     deleteTrilha,
-    updateTrilhaCompleta,
+    updatetrilhacompleta,
     createtrilhalike,
     deletetrilhaLike,
     deletetrilhareport,
-    getreports,
+    getreports, //
     createtrilhaadquirida,
-    getNumberReportsTrilha,
-    getReportInfo,
-    getEditTrilha,
+    getnumberreportstrilha,//
+    getreportinfo, //
+    getedittrilha,
     getUpdatePossuiLocal,
     createtrilhaplace,
     getnotaprovedtrilhas,
-    getUpdateTrilhaAprovacao,
-    getnumerocompletasuser
+    getupdatetrilhaaprovacao,
+    getnumerocompletasuser,
+    createtrilha,
+    getdetailstrilha,
+    getnumerolikestrilha,
+    getutilizadorcheckcompradotrilha,
+    getutilizadorcheckliketrilha
 
   }
 

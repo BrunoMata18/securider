@@ -82,6 +82,57 @@ app.post('/utilizador/update/user/type/:newtype/:id', users.updateusertype)
 
 const trilhas = require('./routes/trilha')
 app.get('/trilha/reports', trilhas.getreports)
+app.get('/trilha/reports/getcount/:id', trilhas.getnumberreportstrilha)
+app.get('/trilha/reports/getinfo/:id', trilhas.getreportinfo)
+app.post('/trilha/delete/report/:id', trilhas.deletereport)
+
+
+///////////// CRIAR UMA TRILHA \\\\\\\\\\\\\\
+
+app.post('/trilha/create/trilha', trilhas.createtrilha)
+
+//////////// MOSTRAR TRILHAS PARA APROVAR E O UPDATE DE APROVAÇÃO \\\\\\\\\\\\\
+
+app.get('/trilha/get/aprovar', trilhas.getnotaprovedtrilhas)
+
+app.post('/trilha/aprove/:id', trilhas.getupdatetrilhaaprovacao)
+
+////////////////// ADICIONAR LOCAL Á TRILHA ////////////////
+
+app.post('/trilha/create/localtrilha', trilhas.createtrilhaplace)
+
+////////////////UPDATE PARA QUANDO UM UTILIZADOR COMPLETAR UMA TRILHA QUE JÁ FOI ADQUIRIDA //////////////////
+
+app.post('/trilha/complete/:userid/:trilhaid', trilhas.updatetrilhacompleta)
+
+/////////////// OBTER AS TRILHAS INCOMPLETAS (MENU PARA ADICIONAR LOCAIS) ////////////////
+
+app.get('/trilha/get/incompleta/:id', trilhas.getedittrilha)
+
+/////////////// OBTER OS DETALHES DA TRILHA /////////////////
+
+app.get('/trilha/get/details/:id', trilhas.getdetailstrilha)
+
+////////////////// CONTAR LIKES NUMA TRILHA /////////////////////
+
+app.get('/trilha/get/details/numberlikes/:id', trilhas.getnumerolikestrilha)
+
+/////////////////// VERIFICAÇÕES DA TRILHA ////////////////////
+
+///////// 1. VERIFICAR SE O UTILIZADOR COMPROU A TRILHA EM QUE CLICOU (MOSTRAR (OU NÃO), O BOTÃO DE COMPRAR) /////////
+
+app.get('/trilha/verify/adquirido/:idtrilha/:id', trilhas.getutilizadorcheckcompradotrilha)
+
+///////// 2. VERIFICAR SE O UTILIZADOR DEIXOU LIKE (ALTERNAR OS BOTÕES DE DEIXAR/REMOVER LIKE) /////////
+
+app.get('/trilha/verify/like/:idtrilha/:id', trilhas.getutilizadorcheckliketrilha)
+
+///////////////// APAGAR UMA TRILHA /////////////////
+
+
+
+
+
 
 /*trilhas
 const trilhas = require('./routes/trilha')
