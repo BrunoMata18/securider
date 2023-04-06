@@ -9,7 +9,7 @@ const {compileTrust} = require("express/lib/utils");
 
 /////////////// APAGAR TRILHA ////////////////
 
-const deleteTrilhaPlace = (req, res) => {
+const deletetrilhaplace = (req, res) => {
     const trilhaId = req.params.id; // obtém o ID do usuário a partir da URL
   
     try {
@@ -28,7 +28,7 @@ const deleteTrilhaPlace = (req, res) => {
     }
   };
 
-  const deleteTrilhaAdquirida = (req, res) => {
+  const deletetrilhaadquirida = (req, res) => {
     const trilhaId = req.params.id; // obtém o ID do usuário a partir da URL
   
     try {
@@ -47,7 +47,7 @@ const deleteTrilhaPlace = (req, res) => {
     }
   };
 
-  const deleteTrilhaFavorito = (req, res) => {
+  const deletetrilhafavorito = (req, res) => {
     const trilhaId = req.params.id; // obtém o ID do usuário a partir da URL
   
     try {
@@ -66,7 +66,7 @@ const deleteTrilhaPlace = (req, res) => {
     }
   };
 
-  const deleteTrilhaLike = (req, res) => {
+  const deletetrilhalike = (req, res) => {
     const trilhaId = req.params.id; // obtém o ID do usuário a partir da URL
   
     try {
@@ -203,6 +203,68 @@ const deleteTrilhaPlace = (req, res) => {
 
     try {
       client.query('DELETE FROM trilha_report WHERE trilha_report_id = ?', [reportId], (error, results) => {
+        if(error)
+        {
+          throw error
+        }
+        res.status(200).json(results)
+      });
+    } catch (e) {
+      console.log(e);
+      res.status(500).json("Erro ao obter o usuário");
+    } finally {
+      console.log("Sucesso!");
+    }
+  };
+
+  /////// APAGAR REPORTS DE UMA TRILHA ////////
+
+  const deletealltrilhareport = (req, res) => {
+    const trilhaId = req.params.id; // obtém o ID do usuário a partir da UR
+
+    try {
+      client.query('DELETE FROM trilha_report WHERE trilha_identifier = ?', [trilhaId], (error, results) => {
+        if(error)
+        {
+          throw error
+        }
+        res.status(200).json(results)
+      });
+    } catch (e) {
+      console.log(e);
+      res.status(500).json("Erro ao obter o usuário");
+    } finally {
+      console.log("Sucesso!");
+    }
+  };
+
+  /////// APAGAR A TRILHA \\\\\\\
+
+  const deletealltrilha = (req, res) => {
+    const trilhaId = req.params.id; // obtém o ID do usuário a partir da UR
+
+    try {
+      client.query('DELETE FROM trilha WHERE trilha_id = ?', [trilhaId], (error, results) => {
+        if(error)
+        {
+          throw error
+        }
+        res.status(200).json(results)
+      });
+    } catch (e) {
+      console.log(e);
+      res.status(500).json("Erro ao obter o usuário");
+    } finally {
+      console.log("Sucesso!");
+    }
+  };
+
+  const deletealltrilhafavorito = (req, res) => {
+    const trilhaId = req.params.id; // obtém o ID do usuário a partir da UR
+    const userId = req.params.userid;
+
+    try {
+      client.query('DELETE FROM trilha_like WHERE trilha_like_uti_id = ? AND trilha_like_trilha_id = ?', [userId , trilhaId], (error, results) => {
         if(error)
         {
           throw error
@@ -463,7 +525,26 @@ const getnotaprovedtrilhas = (req,res)=>{
     }
   };
 
- 
+   ////////////////////////////////// POSSUI LOCAL A UMA TRILHA PELO ID ///////////////////////////////
+
+   const getupdatetrilhahaveplace = (req, res) => {
+    const trilhaId = req.params.id; // obtém o ID do usuário a partir da URL
+  
+    try {
+      client.query('UPDATE trilha SET trilha_possui_local = true WHERE trilha_id = ?', [trilhaId], (error, results) => {
+        if(error)
+        {
+          throw error
+        }
+        res.status(200).json(results)
+      });
+    } catch (e) {
+      console.log(e);
+      res.status(500).json("Erro ao obter o usuário");
+    } finally {
+      console.log("Sucesso!");
+    }
+  };
 
 
 const getnumerocompletasuser = (req, res) => {
@@ -549,10 +630,10 @@ const getnumerocompletasuser = (req, res) => {
 
   module.exports = {
   
-    deleteTrilhaPlace,
-    deleteTrilhaAdquirida,
-    deleteTrilhaFavorito,
-    deleteTrilhaLike,
+    deletetrilhaplace,
+    deletetrilhaadquirida,
+    deletetrilhafavorito,
+    deletetrilhalike,
     deletereport,//
     deleteTrilha,
     updatetrilhacompleta,
@@ -573,7 +654,11 @@ const getnumerocompletasuser = (req, res) => {
     getdetailstrilha,
     getnumerolikestrilha,
     getutilizadorcheckcompradotrilha,
-    getutilizadorcheckliketrilha
+    getutilizadorcheckliketrilha,
+    deletealltrilhareport,
+    deletealltrilha,
+    getupdatetrilhahaveplace,
+    deletealltrilhafavorito
 
   }
 

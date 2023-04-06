@@ -101,6 +101,10 @@ app.post('/trilha/aprove/:id', trilhas.getupdatetrilhaaprovacao)
 
 app.post('/trilha/create/localtrilha', trilhas.createtrilhaplace)
 
+////////////////// UPDATE DE POSSUIR LOCAL (APÓS ADICIONAR UM LOCAL A UMA TRILHA) \\\\\\\\\\\\\\\\\
+
+app.post('/trilha/haveplace/:id', trilhas.getupdatetrilhahaveplace)
+
 ////////////////UPDATE PARA QUANDO UM UTILIZADOR COMPLETAR UMA TRILHA QUE JÁ FOI ADQUIRIDA //////////////////
 
 app.post('/trilha/complete/:userid/:trilhaid', trilhas.updatetrilhacompleta)
@@ -127,9 +131,35 @@ app.get('/trilha/verify/adquirido/:idtrilha/:id', trilhas.getutilizadorcheckcomp
 
 app.get('/trilha/verify/like/:idtrilha/:id', trilhas.getutilizadorcheckliketrilha)
 
-///////////////// APAGAR UMA TRILHA /////////////////
+///////////////// APAGAR UMA TRILHA - LOCAL /////////////////
 
+app.post('/trilha/delete/local/:id', trilhas.deletetrilhaplace)
 
+///////////////// APAGAR UMA TRILHA - APAGAR AS TRILHA DAS ADQUIRIDAS DOS UTILIZADORES QUE A COMPRARAM ///////////////////
+
+app.post('/trilha/delete/adquiridos/:id', trilhas.deletetrilhaadquirida)
+
+///////////////// APAGAR UMA TRILHA - APAGAR AS TRILHA DOS FAVORITOS DOS UTILIZADORES QUE A COMPRARAM ///////////////////
+
+app.post('/trilha/delete/favoritos/:id', trilhas.deletetrilhafavorito)
+
+///////////////// APAGAR OS LIKES DA TRILHA - APAGAR AS TRILHA DOS FAVORITOS DOS UTILIZADORES QUE A COMPRARAM ///////////////////
+
+app.post('/trilha/delete/like/:id', trilhas.deletetrilhalike)
+
+///////////////// APAGAR OS REPORTS RELACIONADOS Á TRILHA //////////////////
+
+app.post('/trilha/delete/reports/:id', trilhas.deletealltrilhareport)
+
+///////////////// APAGAR A TRILHA /////////////////
+
+app.post('/trilha/delete/all/:id', trilhas.deletealltrilha)
+
+////////////////// APAGAR UM FAVORITO ////////////////
+
+app.post('/trilha/delete/favoritos/user/:userid/:id', trilhas.deletealltrilhafavorito)
+
+////////////////////////// MÉTODOS DE EMBATES ///////////////////////////
 
 
 
