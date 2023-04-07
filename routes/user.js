@@ -117,6 +117,25 @@ finally {
 }
 }
 
+const getnovidadesprevia = (req,res)=>{
+  try {
+  client.query('SELECT * FROM trilha WHERE trilha_possui_local = true AND trilha_aprovada = true ORDER BY trilha_data_criacao DESC LIMIT 3',(error,results)=>{
+    if(error)
+    {
+      throw error
+    }
+    res.status(200).json(results)
+  })
+}
+catch (e) {
+  console.log(e);
+  response.status(200).json("error")
+}
+finally {
+  console.log("success");
+}
+}
+
 ///////////////// OBTER FAVORITOS DE UM UTILIZADOR //////////////////
 
 const getutilizadorfavoritos = (req,res)=>{
@@ -208,6 +227,25 @@ const getloja = (req, res) => {
   }
 };
 
+const getlojaprevia = (req, res) => {
+  const userId = req.params.id; // obtém o ID do usuário a partir da URL
+
+  try {
+    client.query('SELECT * FROM trilha WHERE trilha_possui_local = true  AND trilha_aprovada = true AND trilha_id NOT IN (SELECT trilha_adquirida_id FROM trilha_adquirida WHERE trilha_adquirida_uti_id = ?)' + 'ORDER BY trilha_data_criacao DESC LIMIT 3', [userId], (error, results) => {
+      if(error)
+      {
+        throw error
+      }
+      res.status(200).json(results)
+    });
+  } catch (e) {
+    console.log(e);
+    res.status(500).json("Erro ao obter o usuário");
+  } finally {
+    console.log("Sucesso!");
+  }
+};
+
 ///////// OBTER PARA REPETIR /////////
 
 const getpararepetir = (req, res) => {
@@ -215,6 +253,25 @@ const getpararepetir = (req, res) => {
 
   try {
     client.query('SELECT trilha.* FROM trilha INNER JOIN trilha_adquirida ON trilha.trilha_id = trilha_adquirida.trilha_adquirida_trilha_id WHERE trilha_adquirida.trilha_adquirida_uti_id = ?' + 'AND trilha_adquirida.trilha_completada = true;', [userId], (error, results) => {
+      if(error)
+      {
+        throw error
+      }
+      res.status(200).json(results)
+    });
+  } catch (e) {
+    console.log(e);
+    res.status(500).json("Erro ao obter o usuário");
+  } finally {
+    console.log("Sucesso!");
+  }
+};
+
+const getpararepetirprevia = (req, res) => {
+  const userId = req.params.id; // obtém o ID do usuário a partir da URL
+
+  try {
+    client.query('SELECT trilha.* FROM trilha INNER JOIN trilha_adquirida ON trilha.trilha_id = trilha_adquirida.trilha_adquirida_trilha_id WHERE trilha_adquirida.trilha_adquirida_uti_id = ?' + 'AND trilha_adquirida.trilha_completada = true LIMIT 3', [userId], (error, results) => {
       if(error)
       {
         throw error
@@ -251,6 +308,24 @@ const getminhastrilhas = (req, res) => {
   }
 };
 
+const getminhastrilhasprevia = (req, res) => {
+  const userId = req.params.id; // obtém o ID do usuário a partir da URL
+
+  try {
+    client.query('SELECT * FROM trilha WHERE trilha_criador_id = ?' + 'ORDER BY trilha_data_criacao DESC LIMIT 3', [userId], (error, results) => {
+      if(error)
+      {
+        throw error
+      }
+      res.status(200).json(results)
+    });
+  } catch (e) {
+    console.log(e);
+    res.status(500).json("Erro ao obter o usuário");
+  } finally {
+    console.log("Sucesso!");
+  }
+};
 
 ///////// OBTER OS PONTOS DO UTILIZADOR PELO ID (PARA QUE NO ANDROID SEJA CALCULADO O NIVEL) ///////////
 
@@ -727,6 +802,10 @@ module.exports = {
   createtrilha,
   userdelete,
   updateuser,
+  getlojaprevia,
+  getpararepetirprevia,
+  getminhastrilhasprevia,
+  getnovidadesprevia,
   getutilizadorid,//
   getutilizador5,//
   getutilizador2,//

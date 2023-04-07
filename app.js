@@ -57,6 +57,22 @@ app.post('/utilizador/update/pontos/semanais/:id/:quantity', users.updateuserpon
 app.post('/utilizador/update/pontos/totais/:id/:quantity', users.updateuserpontostotais)
 app.get('/utilizador/get/trilha/favoritos/:id', users.getutilizadorfavoritos)
 
+///////// OBTER PREVIA DE NOVIDADES (NA HOMEPAGE) //////////
+
+app.get('/trilha/get/previa/novidades', users.getnovidadesprevia)
+
+//////// OBTER PREVIA DE LOJA ////////
+
+app.get('/trilha/get/previa/loja/:id', users.getlojaprevia)
+
+//////// OBTER PREVIA DE PARA REPETIR /////////
+
+app.get('/trilha/get/previa/pararepetir/:id', users.getpararepetirprevia)
+
+//////// OBTER PREVIA DE MINHAS TRILHAS /////////
+
+app.get('/trilha/get/previa/minhastrilhas/:id', users.getminhastrilhasprevia)
+
 //DEIXAR E REMOVER LIKE/
 
 app.post('/utilizador/darlike', users.createtrilhalike)
