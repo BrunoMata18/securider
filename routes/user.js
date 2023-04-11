@@ -252,7 +252,7 @@ const getpararepetir = (req, res) => {
   const userId = req.params.id; // obtém o ID do usuário a partir da URL
 
   try {
-    client.query('SELECT trilha.* FROM trilha INNER JOIN trilha_adquirida ON trilha.trilha_id = trilha_adquirida.trilha_adquirida_trilha_id WHERE trilha_adquirida.trilha_adquirida_uti_id = ?' + 'AND trilha_adquirida.trilha_completada = true;', [userId], (error, results) => {
+    client.query('SELECT * FROM trilha INNER JOIN trilha_adquirida ON trilha.trilha_id = trilha_adquirida.trilha_adquirida_trilha_id WHERE trilha_adquirida.trilha_adquirida_uti_id = ?' + 'AND trilha_adquirida.trilha_completada = true;', [userId], (error, results) => {
       if(error)
       {
         throw error
@@ -271,7 +271,7 @@ const getpararepetirprevia = (req, res) => {
   const userId = req.params.id; // obtém o ID do usuário a partir da URL
 
   try {
-    client.query('SELECT trilha.* FROM trilha INNER JOIN trilha_adquirida ON trilha.trilha_id = trilha_adquirida.trilha_adquirida_trilha_id WHERE trilha_adquirida.trilha_adquirida_uti_id = ?' + 'AND trilha_adquirida.trilha_completada = true LIMIT 3', [userId], (error, results) => {
+    client.query('SELECT * FROM trilha INNER JOIN trilha_adquirida ON trilha.trilha_id = trilha_adquirida.trilha_adquirida_trilha_id WHERE trilha_adquirida.trilha_adquirida_uti_id = ?' + 'AND trilha_adquirida.trilha_completada = true LIMIT 3', [userId], (error, results) => {
       if(error)
       {
         throw error
