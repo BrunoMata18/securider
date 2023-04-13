@@ -591,7 +591,27 @@ const getnumerocompletasuser = (req, res) => {
     const trilhaId = req.params.idtrilha;
 
     try {
-      client.query('SELECT EXISTS (SELECT 1 FROM trilha_adquirida WHERE trilha_adquirida.trilha_adquirida_trilha_id = ? AND trilha_adquirida.trilha_adquirida_uti_id = ?) AS comprou_trilha;', [trilhaId , userId], (error, results) => {
+      client.query('SELECT * FROM trilha_adquirida WHERE trilha_adquirida.trilha_adquirida_trilha_id = ? AND trilha_adquirida.trilha_adquirida_uti_id = ?;', [trilhaId , userId], (error, results) => {
+        if(error)
+        {
+          throw error
+        }
+        res.status(200).json(results)
+      });
+    } catch (e) {
+      console.log(e);
+      res.status(500).json("Erro ao obter o usuário");
+    } finally {
+      console.log("Sucesso!");
+    }
+  };
+
+  const getutilizadorcriadotrilha = (req, res) => {
+    const userId = req.params.id; // obtém o ID do usuário a partir da URL
+    const trilhaId = req.params.idtrilha;
+
+    try {
+      client.query('SELECT * FROM trilha WHERE trilha.trilha_id = ? AND trilha.trilha_criador_id = ?;', [trilhaId , userId], (error, results) => {
         if(error)
         {
           throw error
@@ -659,7 +679,8 @@ const getnumerocompletasuser = (req, res) => {
     deletealltrilhareport,
     deletealltrilha,
     getupdatetrilhahaveplace,
-    deletealltrilhafavorito
+    deletealltrilhafavorito,
+    getutilizadorcriadotrilha
 
   }
 

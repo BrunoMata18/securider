@@ -149,6 +149,10 @@ app.get('/trilha/verify/adquirido/:idtrilha/:id', trilhas.getutilizadorcheckcomp
 
 app.get('/trilha/verify/like/:idtrilha/:id', trilhas.getutilizadorcheckliketrilha)
 
+///////// 3. VERIFICAR SE A TRILHA FOI CRIADA PELO UTILIZADOR QUE A ACEDE /////////
+
+app.get('/trilha/verify/criado/:idtrilha/:id', trilhas.getutilizadorcriadotrilha)
+
 ///////////////// APAGAR UMA TRILHA - LOCAL /////////////////
 
 app.post('/trilha/delete/local/:id', trilhas.deletetrilhaplace)
