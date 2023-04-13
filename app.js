@@ -57,6 +57,8 @@ app.post('/utilizador/update/pontos/semanais/:id/:quantity', users.updateuserpon
 app.post('/utilizador/update/pontos/totais/:id/:quantity', users.updateuserpontostotais)
 app.get('/utilizador/get/trilha/favoritos/:id', users.getutilizadorfavoritos)
 
+
+
 ///////// OBTER PREVIA DE NOVIDADES (NA HOMEPAGE) //////////
 
 app.get('/trilha/get/previa/novidades', users.getnovidadesprevia)
