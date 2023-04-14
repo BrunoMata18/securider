@@ -487,7 +487,7 @@ const getUpdatePossuiLocal = (req, res) => {
 
 const getnotaprovedtrilhas = (req,res)=>{
     try {
-    client.query('SELECT t.trilha_id, t.trilha_nome, t.trilha_descricao, t.trilha_recompensa_pontos, t.trilha_preco_pontos, t.trilha_data_criacao, t.trilha_possui_local, t.trilha_aprovada, d.trilha_dificuldade_tipo, u.utilizador_nome FROM trilha t JOIN trilha_dificuldade_tipo d ON t.trilha_dificuldade_id = d.trilha_dificuldade_id_tipo JOIN users u ON t.trilha_criador_id = u.utilizador_id WHERE t.trilha_possui_local = true AND t.trilha_aprovada = false ORDER BY t.trilha_data_criacao DESC;',(error,results)=>{
+    client.query('SELECT t.trilha_id, t.trilha_nome, t.trilha_descricao, t.trilha_recompensa_pontos, t.trilha_preco_pontos, t.trilha_data_criacao, t.trilha_possui_local, t.trilha_aprovada, d.trilha_dificuldade_tipo, u.utilizador_username FROM trilha t JOIN trilha_dificuldade_tipo d ON t.trilha_dificuldade_id = d.trilha_dificuldade_id_tipo JOIN users u ON t.trilha_criador_id = u.utilizador_id WHERE t.trilha_possui_local = true AND t.trilha_aprovada = false ORDER BY t.trilha_data_criacao DESC;',(error,results)=>{
       if(error)
       {
         throw error
