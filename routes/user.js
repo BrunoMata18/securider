@@ -13,6 +13,29 @@ const {compileTrust} = require("express/lib/utils");
 const createutilizador = (request, response) => {
   try {
     const users = request.body;
+    console.log(users);
+
+      const query = 'INSERT INTO users (utilizador_username, utilizador_password, utilizador_ddd, utilizador_telemovel, utilizador_email, utilizador_pontos_sem, utilizador_moedas, utilizador_pontos_totais, utilizador_tipo_id) VALUES ("'+ users.utilizador_username.toString() +'", "'+ users.utilizador_password.toString() +'", "'+ users.utilizador_ddd.toString() +'", "'+ users.utilizador_telemovel.toString() +'", "'+ users.utilizador_email.toString() +'", "'+ users.utilizador_pontos_sem.toString() +'", "'+ users.utilizador_moedas.toString() +'", "'+ users.utilizador_pontos_totais.toString() +'", "'+ users.utilizador_tipo_id.toString() +'")';
+
+      console.log(query);
+      client_envio.query(query, (error, results) => {
+        if (error) {
+          throw error;
+        }
+        response.status(201).send("User added with ID: ");
+      });
+
+  } catch (e) {
+    console.log(e);
+    response.status(200).json("error");
+  } finally {
+    console.log("success");
+  }
+}
+
+/*const createutilizador = (request, response) => {
+  try {
+    const users = request.body;
     const saltRounds = 10;
     console.log(users);
 
@@ -35,7 +58,7 @@ const createutilizador = (request, response) => {
   } finally {
     console.log("success");
   }
-}
+}*/
 
 ////////// OBTER OS TIPOS DE UTILIZADOR //////////
 
@@ -409,18 +432,18 @@ const login = (request, response) => {
         }
 
         if (results.rows.length > 0) {
-          const hash = results.rows[0].utilizador_password;
+          const passwordfrombd = results.rows[0].utilizador_password;
           const userId = results.rows[0].utilizador_id;
+          const passwordinserted = users.utilizador_password;
 
-          bcrypt.compare(users.utilizador_password, hash, function (err, res) {
-            if (res === true) {
+            if (passwordfrombd == passwordinserted) {
               response.status(200).json({ message: "Login successful", userId });
             } else {
               response
                 .status(401)
                 .json({ message: "Incorrect email or password" });
             }
-          });
+          
         } else {
           response
             .status(401)
