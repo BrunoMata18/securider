@@ -157,19 +157,19 @@ app.get('/trilha/verify/criado/:idtrilha/:id', trilhas.getutilizadorcriadotrilha
 
 app.post('/trilha/delete/local/:id', trilhas.deletetrilhaplace)
 
-///////////////// APAGAR UMA TRILHA - APAGAR AS TRILHA DAS ADQUIRIDAS DOS UTILIZADORES QUE A COMPRARAM ///////////////////
+///////////////// APAGAR UMA TRILHA - APAGAR AS TRILHA DAS ADQUIRIDAS DOS UTILIZADORES QUE A COMPRARAM ///////////////////--FEITO
 
 app.post('/trilha/delete/adquiridos/:id', trilhas.deletetrilhaadquirida)
 
-///////////////// APAGAR UMA TRILHA - APAGAR AS TRILHA DOS FAVORITOS DOS UTILIZADORES QUE A COMPRARAM ///////////////////
+///////////////// APAGAR UMA TRILHA - APAGAR AS TRILHA DOS FAVORITOS DOS UTILIZADORES QUE A COMPRARAM ///////////////////--FEITO
 
 app.post('/trilha/delete/favoritos/:id', trilhas.deletetrilhafavorito)
 
-///////////////// APAGAR OS LIKES DA TRILHA - APAGAR AS TRILHA DOS FAVORITOS DOS UTILIZADORES QUE A COMPRARAM ///////////////////
+///////////////// APAGAR OS LIKES DA TRILHA - APAGAR AS TRILHA DOS FAVORITOS DOS UTILIZADORES QUE A COMPRARAM ///////////////////--FEITO
 
 app.post('/trilha/delete/like/:id', trilhas.deletetrilhalike)
 
-///////////////// APAGAR OS REPORTS RELACIONADOS Á TRILHA //////////////////
+///////////////// APAGAR OS REPORTS RELACIONADOS Á TRILHA //////////////////--FEITO
 
 app.post('/trilha/delete/reports/:id', trilhas.deletealltrilhareport)
 
