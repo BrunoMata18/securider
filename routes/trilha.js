@@ -403,7 +403,7 @@ const getedittrilha = (req, res) => {
     const userId = req.params.id; // obtém o ID do usuário a partir da URL
   
     try {
-      client.query('SELECT trilha_id, trilha_nome, trilha_descricao, trilha_recompensa_pontos, trilha_preco_pontos, trilha_data_criacao, trilha_aprovada, trilha_possui_local , trilha_dificuldade_id, trilha_criador_id FROM trilha WHERE trilha_possui_local = false AND trilha_criador_id = ?', [userId], (error, results) => {
+      client.query('SELECT trilha_id, trilha_nome, trilha_descricao, trilha_recompensa_pontos, trilha_preco_pontos, trilha_data_criacao, trilha_aprovada, trilha_possui_local , trilha_dificuldade_id, trilha_criador_id FROM trilha WHERE trilha_possui_local = false AND trilha_aprovada = false AND trilha_criador_id = ?', [userId], (error, results) => {
         if(error)
         {
           throw error
