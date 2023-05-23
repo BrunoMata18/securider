@@ -415,6 +415,45 @@ const getutilizadorusername = (req, res) => {
 /////////////// APAGAR UMA TRILHA //////////////
 
 
+const getusernamepassword = (req, res) => {
+  const userUsername = req.params.username; // obtém o ID do usuário a partir da URL
+
+  try {
+    client.query('SELECT * FROM users WHERE utilizador_username = ?', [userUsername], (error, results) => {
+      if(error)
+      {
+        throw error
+      }
+      
+      if (results.rows.length > 0) {
+        const passwordfrombd = results.rows[0].utilizador_password;
+        const userId = results.rows[0].utilizador_id;
+        const passwordinserted = users.utilizador_password;
+
+          if (passwordfrombd == passwordinserted) {
+            response.status(200).json({ message: "Login successful", userId });
+          } else {
+            response
+              .status(401)
+              .json({ message: "Incorrect email or password" });
+          }
+        
+      } else {
+        response
+          .status(401)
+          .json({ message: "Incorrect email or password" });
+      }
+      res.status(200).json(results)
+    });
+  } catch (e) {
+    console.log(e);
+    res.status(500).json("Erro ao obter o usuário");
+  } finally {
+    console.log("Sucesso!");
+  }
+};
+
+
 
 //////// LOGIN DO UTILIZADOR ///////
 
@@ -843,5 +882,6 @@ module.exports = {
   getnumbercompletas, //
   createtrilhaadquirida, //
   createtrilhareport, //
-  updateusertype //
+  updateusertype, //
+  getusernamepassword //
 }
