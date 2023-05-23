@@ -637,7 +637,7 @@ const createtrilhaadquirida = (request, response) => {
     const trilha_adquirida = request.body
     const trilha_completada = false;
 
-    console.log(trilha)
+    console.log(trilha_adquirida)
     const query = 'INSERT INTO trilha_adquirida (trilha_completada, trilha_adquirida_uti_id, trilha_adquirida_trilha_id) VALUES ('+ trilha_completada +', '+ trilha_adquirida.trilha_adquirida_uti_id + ' , ' + trilha_adquirida.trilha_adquirida_trilha_id +")'";
 
     console.log(query)
@@ -649,7 +649,7 @@ const createtrilhaadquirida = (request, response) => {
     })
   } catch (e) {
     console.log(e);
-    response.status(500).json({error: console.log(e)})
+    response.status(500).json({error: "Erro"})
   } finally {
     console.log("success");
   }
