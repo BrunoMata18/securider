@@ -612,7 +612,7 @@ const createtrilhalike = (request, response) => {
   try {
     const trilha_like = request.body
 
-    console.log(trilha)
+    console.log(trilha_like)
     const query = 'INSERT INTO trilha_like (trilha_like_uti_id, trilha_like_trilha_id) VALUES ('+ trilha_like.trilha_like_uti_id +', '+ trilha_like.trilha_like_trilha_id + ")'";
 
     console.log(query)
