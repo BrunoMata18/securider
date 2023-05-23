@@ -634,26 +634,27 @@ const createtrilhalike = (request, response) => {
 
 const createtrilhaadquirida = (request, response) => {
   try {
-    const trilha_adquirida = request.body
+    const trilha_adquirida = request.body;
+
     const trilha_completada = false;
 
-    console.log(trilha_adquirida)
-    const query = 'INSERT INTO trilha_adquirida (trilha_completada, trilha_adquirida_uti_id, trilha_adquirida_trilha_id) VALUES ('+ trilha_completada +', '+ trilha_adquirida.trilha_adquirida_uti_id + ', ' + trilha_adquirida.trilha_adquirida_trilha_id +')';
+    const query = 'INSERT INTO trilha_adquirida (trilha_completada, trilha_adquirida_uti_id, trilha_adquirida_trilha_id) VALUES (?, ?, ?)';
+    const values = [trilha_completada, trilha_adquirida.trilha_adquirida_uti_id, trilha_adquirida.trilha_adquirida_trilha_id];
 
-    console.log(query)
-    client_envio.query(query, (error, results) => {
+    client_envio.query(query, values, (error, results) => {
       if (error) {
-        throw error
+        throw error;
       }
-      response.status(201).send("Trilha added with ID: " + results.insertId)
-    })
+      response.status(201).send("Trilha added with ID: " + results.insertId);
+    });
   } catch (e) {
     console.log(e);
-    response.status(500).json({error: "Erro"})
+    response.status(500).json({error: "Erro"});
   } finally {
     console.log("success");
   }
 }
+
 
 ////////// REPORTAR UMA TRILHA //////////
 
