@@ -649,7 +649,7 @@ const createtrilhaadquirida = (request, response) => {
     })
   } catch (e) {
     console.log(e);
-    response.status(500).json({error: e.message + "nottttt"})
+    response.status(500).json({error: console.log(e)})
   } finally {
     console.log("success");
   }
