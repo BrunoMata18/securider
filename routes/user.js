@@ -424,7 +424,7 @@ const getusernamepassword = (req, res) => {
       {
         throw error
       }
-      
+
       if (results.rows.length > 0) {
         const passwordfrombd = results.rows[0].utilizador_password;
         const userId = results.rows[0].utilizador_id;
@@ -649,7 +649,7 @@ const createtrilhaadquirida = (request, response) => {
     })
   } catch (e) {
     console.log(e);
-    response.status(500).json({error: e.message})
+    response.status(500).json({error: e.message + "nottttt"})
   } finally {
     console.log("success");
   }
