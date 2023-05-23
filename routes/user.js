@@ -634,13 +634,17 @@ const createtrilhalike = (request, response) => {
 
 const createtrilhaadquirida = (request, response) => {
   try {
-    const trilha_adquirida = request.body;
+    const trilha_adquirida = request.body
 
     const trilha_completada = false;
 
-    const query = 'INSERT INTO trilha_adquirida (trilha_completada, trilha_adquirida_uti_id, trilha_adquirida_trilha_id) VALUES (?, ?, ?)';
-    const values = [trilha_completada, trilha_adquirida.trilha_adquirida_uti_id, trilha_adquirida.trilha_adquirida_trilha_id];
+    console.log(trilha_adquirida)
 
+    
+    const query = 'INSERT INTO trilha_adquirida (trilha_completada, trilha_adquirida_uti_id, trilha_adquirida_trilha_id) VALUES (?, ?, ?)';
+    const values = [trilha_completada, trilha_adquirida[0].trilha_adquirida_uti_id, trilha_adquirida[0].trilha_adquirida_trilha_id];
+
+    console.log(values)
     client_envio.query(query, values, (error, results) => {
       if (error) {
         throw error;
