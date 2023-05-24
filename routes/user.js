@@ -636,6 +636,9 @@ const createtrilhaadquirida = (request, response) => {
   try {
     const trilha_adquirida = request.body
 
+    console.log(JSON.stringify(request.body));
+
+
     const trilha_completada = false;
 
     console.log(trilha_adquirida)
