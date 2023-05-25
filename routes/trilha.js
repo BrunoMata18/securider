@@ -359,7 +359,7 @@ const getnumberreportstrilha = (req, res) => {
     const trilhaId = req.params.id; // obtém o ID do usuário a partir da URL
   
     try {
-      client.query('SELECT COUNT(*) AS numero_reports FROM trilha_report WHERE trilha_identifier = ?', [trilhaId], (error, results) => {
+      client.query('SELECT COUNT(*) AS num_reports FROM trilha_report WHERE trilha_identifier = ?', [trilhaId], (error, results) => {
         if(error)
         {
           throw error

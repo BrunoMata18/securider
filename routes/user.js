@@ -606,29 +606,7 @@ const userdeletelike = (req, res) => {
   }
 };
 
-////// ADICIONAR LIKE - TERMINAR //////
 
-const createtrilhalike = (request, response) => {
-  try {
-    const trilha_like = request.body
-
-    console.log(trilha_like)
-    const query = 'INSERT INTO trilha_like (trilha_like_uti_id, trilha_like_trilha_id) VALUES ('+ trilha_like.trilha_like_uti_id +', '+ trilha_like.trilha_like_trilha_id + ")'";
-
-    console.log(query)
-    client_envio.query(query, (error, results) => {
-      if (error) {
-        throw error
-      }
-      response.status(201).send("Trilha added with IDD: " + results.insertId)
-    })
-  } catch (e) {
-    console.log(e);
-    response.status(500).json({error: e.message})
-  } finally {
-    console.log("success");
-  }
-}
 
 /////////// COMPRAR TRILHA ////////////
 
@@ -662,6 +640,32 @@ const createtrilhaadquirida = (request, response) => {
   }
 }
 
+////// ADICIONAR LIKE - TERMINAR //////
+
+const createtrilhalike = (request, response) => {
+  try {
+    const trilha_like = request.body
+
+    console.log(trilha_like)
+    const query = 'INSERT INTO trilha_like (trilha_like_uti_id, trilha_like_trilha_id) VALUES (?,?)';
+    //+ trilha_like.trilha_like_uti_id +', '+ trilha_like.trilha_like_trilha_id + ")'";
+    const values = [trilha_like.trilha_like_uti_id, trilha_like.trilha_like_trilha_id];
+    console.log(values);
+
+    console.log(query)
+    client_envio.query(query, (error, results) => {
+      if (error) {
+        throw error
+      }
+      response.status(201).send("Trilha added with IDD: " + results.insertId)
+    })
+  } catch (e) {
+    console.log(e);
+    response.status(500).json({error: e.message})
+  } finally {
+    console.log("success");
+  }
+}
 
 ////////// REPORTAR UMA TRILHA //////////
 
@@ -671,12 +675,11 @@ const createtrilhareport = (request, response) => {
   
     console.log(trilha_report)
     const query = 'INSERT INTO trilha_report (trilha_report_date, trilha_identifier) VALUES (NOW(),?)';
-      //' + 'NOW(), '+ trilha_report.trilha_identifier + ")'";
-      const values = [trilha_report.trilha_identifier];
-      console.log(values)
+    const values = [trilha_report.trilha_identifier];
+    console.log(values)
 
     console.log(query)
-    client_envio.query(query, (error, results) => {
+    client_envio.query(query, values, (error, results) => {
       if (error) {
         throw error
       }
@@ -689,6 +692,7 @@ const createtrilhareport = (request, response) => {
     console.log("success");
   }
 }
+
 
 
 ///////////UPDATE MOEDAS, PONTOS SEMANAIS E TOTAIS //////////////
