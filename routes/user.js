@@ -670,8 +670,11 @@ const createtrilhareport = (request, response) => {
     const trilha_report = request.body
   
 
-    console.log(trilha)
-    const query = 'INSERT INTO trilha_report (trilha_report_date, trilha_identifier) VALUES (' + 'NOW(), '+ trilha_report.trilha_identifier + ")'";
+    console.log(trilha_report)
+    const query = 'INSERT INTO trilha_report (trilha_report_date, trilha_identifier) VALUES (?,?)';
+      //' + 'NOW(), '+ trilha_report.trilha_identifier + ")'";
+      const values = [trilha_report.trilha_report_date, trilha_report.trilha_identifier];
+      console.log(values)
 
     console.log(query)
     client_envio.query(query, (error, results) => {
