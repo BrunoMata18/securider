@@ -124,7 +124,7 @@ app.post('/trilha/create/localtrilha', trilhas.createtrilhaplace)
 
 ////////////////// UPDATE DE POSSUIR LOCAL (APÓS ADICIONAR UM LOCAL A UMA TRILHA) \\\\\\\\\\\\\\\\\
 
-app.post('/trilha/haveplace/:id', trilhas.getupdatetrilhahaveplace)
+app.put('/trilha/haveplace/:id', trilhas.getupdatetrilhahaveplace)
 
 ////////////////UPDATE PARA QUANDO UM UTILIZADOR COMPLETAR UMA TRILHA QUE JÁ FOI ADQUIRIDA //////////////////
 

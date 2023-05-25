@@ -316,7 +316,7 @@ const getminhastrilhas = (req, res) => {
   const userId = req.params.id; // obtém o ID do usuário a partir da URL
 
   try {
-    client.query('SELECT * FROM trilha WHERE trilha_criador_id = ? AND trilha_possui_local = 1 ' + 'ORDER BY trilha_data_criacao DESC', [userId], (error, results) => {
+    client.query('SELECT * FROM trilha WHERE trilha_criador_id = ? AND trilha_possui_local = 1 AND trilha_aprovada = 1 ' + 'ORDER BY trilha_data_criacao DESC', [userId], (error, results) => {
       if(error)
       {
         throw error
@@ -335,7 +335,7 @@ const getminhastrilhasprevia = (req, res) => {
   const userId = req.params.id; // obtém o ID do usuário a partir da URL
 
   try {
-    client.query('SELECT * FROM trilha WHERE trilha_criador_id = ?' + 'ORDER BY trilha_data_criacao DESC LIMIT 3', [userId], (error, results) => {
+    client.query('SELECT * FROM trilha WHERE trilha_criador_id = ? AND trilha_possui_local = 1 ' + 'ORDER BY trilha_data_criacao DESC LIMIT 3', [userId], (error, results) => {
       if(error)
       {
         throw error
