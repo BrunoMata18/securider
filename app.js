@@ -116,7 +116,7 @@ app.post('/trilha/create/trilha', trilhas.createtrilha)
 
 app.get('/trilha/get/aprovar', trilhas.getnotaprovedtrilhas)
 
-app.post('/trilha/aprove/:id', trilhas.getupdatetrilhaaprovacao)
+app.put('/trilha/aprove/:id', trilhas.getupdatetrilhaaprovacao)
 
 ////////////////// ADICIONAR LOCAL Á TRILHA ////////////////
 
@@ -158,7 +158,7 @@ app.get('/trilha/verify/criado/:idtrilha/:id', trilhas.getutilizadorcriadotrilha
 
 ///////////////// APAGAR UMA TRILHA - LOCAL /////////////////
 
-app.post('/trilha/delete/local/:id', trilhas.deletetrilhaplace)
+app.delete('/trilha/delete/local/:id', trilhas.deletetrilhaplace)
 
 ///////////////// APAGAR UMA TRILHA - APAGAR AS TRILHA DAS ADQUIRIDAS DOS UTILIZADORES QUE A COMPRARAM ///////////////////--FEITO
 
@@ -178,7 +178,7 @@ app.post('/trilha/delete/reports/:id', trilhas.deletealltrilhareport)
 
 ///////////////// APAGAR A TRILHA /////////////////
 
-app.post('/trilha/delete/all/:id', trilhas.deletealltrilha)
+app.delete('/trilha/delete/all/:id', trilhas.deletealltrilha)
 
 ////////////////// APAGAR UM FAVORITO ////////////////
 
