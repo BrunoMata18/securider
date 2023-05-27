@@ -283,7 +283,7 @@ const deletetrilhaplace = (req, res) => {
 
   const getreports = (req,res)=>{
     try {
-    client.query('SELECT trilha_report_id, trilha_report_date, trilha_identifier, trilha_nome FROM trilha_report INNER JOIN trilha ON trilha.trilha_id = trilha_report.trilha_identifier ORDER BY trilha_report_date DESC',(error,results)=>{
+    client.query('SELECT trilha_report_id, trilha_identifier, trilha_nome FROM trilha_report INNER JOIN trilha ON trilha.trilha_id = trilha_report.trilha_identifier',(error,results)=>{
       if(error)
       {
         throw error
