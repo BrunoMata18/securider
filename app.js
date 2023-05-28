@@ -162,19 +162,19 @@ app.delete('/trilha/delete/local/:id', trilhas.deletetrilhaplace)
 
 ///////////////// APAGAR UMA TRILHA - APAGAR AS TRILHA DAS ADQUIRIDAS DOS UTILIZADORES QUE A COMPRARAM ///////////////////--FEITO
 
-app.post('/trilha/delete/adquiridos/:id', trilhas.deletetrilhaadquirida)
+app.delete('/trilha/delete/adquiridos/:id', trilhas.deletetrilhaadquirida)
 
 ///////////////// APAGAR UMA TRILHA - APAGAR AS TRILHA DOS FAVORITOS DOS UTILIZADORES QUE A COMPRARAM ///////////////////--FEITO
 
-app.post('/trilha/delete/favoritos/:id', trilhas.deletetrilhafavorito)
+app.delete('/trilha/delete/favoritos/:id', trilhas.deletetrilhafavorito)
 
 ///////////////// APAGAR OS LIKES DA TRILHA - APAGAR AS TRILHA DOS FAVORITOS DOS UTILIZADORES QUE A COMPRARAM ///////////////////--FEITO
 
-app.post('/trilha/delete/like/:id', trilhas.deletetrilhalike)
+app.delete('/trilha/delete/like/:id', trilhas.deletetrilhalike)
 
 ///////////////// APAGAR OS REPORTS RELACIONADOS Á TRILHA //////////////////--FEITO
 
-app.post('/trilha/delete/reports/:id', trilhas.deletealltrilhareport)
+app.delete('/trilha/delete/reports/:id', trilhas.deletealltrilhareport)
 
 ///////////////// APAGAR A TRILHA /////////////////
 

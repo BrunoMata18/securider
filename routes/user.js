@@ -650,7 +650,7 @@ const createtrilhalike = (request, response) => {
     const query = 'INSERT INTO trilha_like (trilha_like_uti_id, trilha_like_trilha_id) VALUES (?,?)';
     //+ trilha_like.trilha_like_uti_id +', '+ trilha_like.trilha_like_trilha_id + ")'";
     const values = [trilha_like.trilha_like_uti_id, trilha_like.trilha_like_trilha_id];
-    console.log(values);
+    console.log(values)
 
     console.log(query)
     client_envio.query(query, (error, results) => {
@@ -674,7 +674,7 @@ const createtrilhareport = (request, response) => {
     const trilha_report = request.body
   
     console.log(trilha_report)
-    const query = 'INSERT INTO trilha_report (trilha_report_date, trilha_identifier) VALUES (NOW(),?)';
+    const query = 'INSERT INTO trilha_report (trilha_identifier) VALUES (?)';
     const values = [trilha_report.trilha_identifier];
     console.log(values)
 
