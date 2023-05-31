@@ -84,33 +84,7 @@ SET pontos_semanais = quantidade_nova,
     moedas = quantidade_nova
 WHERE utilizador_id = {utilizador_id};*/
 
-/*CRIAR UM EMBATE (POIS QUANDO UMA COLISÃO É DETETADA E O UTILIZADOR ENCONTRA-SE INANIMADO, É ENVIADO UM EMBATE)*/
 
-const createuserembate = (request, response) => {
-    try {
-      const trilha = request.body;
-  
-      console.log(trilha);
-    
-      const query = 'INSERT INTO embate (embate_local, embate_data, embate_local_latitude, embate_local_longitude) VALUES ("' + trilha.embate_local + '", NOW() , ' + trilha.embate_local_latitude + ',' + trilha.embate_local_longitude + ')';
-
-
-      console.log(query);
-  
-      client_envio.query(query, (error, results) => {
-        if (error) {
-          throw error;
-        }
-  
-        response.status(201).send("Trilha added with ID: " + results.insertId);
-      });
-    } catch (e) {
-      console.log(e);
-      response.status(500).json({ error: e.message });
-    } finally {
-      console.log("success");
-    }
-  };
   
   
 
@@ -217,6 +191,38 @@ const createreport = (request, response) => {
     console.log(query);
 
     client_envio.query(query, (error, results) => {
+      if (error) {
+        throw error;
+      }
+
+      response.status(201).send("Trilha added with ID: " + results.insertId);
+    });
+  } catch (e) {
+    console.log(e);
+    response.status(500).json({ error: e.message });
+  } finally {
+    console.log("success");
+  }
+};
+
+/*CRIAR UM EMBATE (POIS QUANDO UMA COLISÃO É DETETADA E O UTILIZADOR ENCONTRA-SE INANIMADO, É ENVIADO UM EMBATE)*/
+
+const createuserembate = (request, response) => {
+  try {
+    const embate = request.body;
+
+    console.log(embate);
+  
+    //const query = 'INSERT INTO embate (embate_data, embate_local_latitude, embate_local_longitude) VALUES (NOW() , ' + trilha.embate_local_latitude + ',' + trilha.embate_local_longitude + ')';
+
+    const query = 'INSERT INTO embate (embate_data, embate_local_latitude, embate_local_longitude) VALUES (NOW() , ?, ?)';
+
+    const values = [embate.embate_local_latitude, embate.embate_local_longitude];
+    console.log(values);
+
+    console.log(query);
+
+    client_envio.query(query, values, (error, results) => {
       if (error) {
         throw error;
       }

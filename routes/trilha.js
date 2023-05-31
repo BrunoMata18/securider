@@ -374,6 +374,30 @@ const getnumberreportstrilha = (req, res) => {
     }
   };
 
+  ////////////OBTER RESULTADO\\\\\\\\\\\\\
+
+  /////////////////// OBTER DETALHES AO ABRIR UM REPORT (SOBRE A TRILHA REPORTADA) /////////////////////
+
+const getcompleteverify = (req, res) => {
+  const userId = req.params.id; // obtém o ID do usuário a partir da URL~
+  const trilhaId = req.params.trilhaid;
+
+  try {
+    client.query('SELECT * FROM trilha_adquirida WHERE trilha_adquirida_uti_id = ? AND trilha_adquirida_trilha_id = ?', [userId, trilhaId], (error, results) => {
+      if(error)
+      {
+        throw error
+      }
+      res.status(200).json(results)
+    });
+  } catch (e) {
+    console.log(e);
+    res.status(500).json("Erro ao obter o usuário");
+  } finally {
+    console.log("Sucesso!");
+  }
+};
+
 /////////////////// OBTER DETALHES AO ABRIR UM REPORT (SOBRE A TRILHA REPORTADA) /////////////////////
 
 const getreportinfo = (req, res) => {
@@ -680,7 +704,8 @@ const getnumerocompletasuser = (req, res) => {
     deletealltrilha,
     getupdatetrilhahaveplace,
     deletealltrilhafavorito,
-    getutilizadorcriadotrilha
+    getutilizadorcriadotrilha,
+    getcompleteverify
 
   }
 

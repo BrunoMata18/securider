@@ -81,7 +81,7 @@ app.get('/trilha/get/previa/minhastrilhas/:id', users.getminhastrilhasprevia)
 //DEIXAR E REMOVER LIKE/
 
 app.post('/utilizador/darlike', users.createtrilhalike)
-app.post('/utilizador/removerlike/:idtrilha/:idutilizador', users.userdeletelike)
+app.delete('/utilizador/removerlike/:idtrilha/:idutilizador', users.userdeletelike)
 
 /////OBTER DETALHES DA CONTA - NUMERO DE TRILHAS COMPLETAS/////
 
@@ -117,6 +117,10 @@ app.post('/trilha/create/trilha', trilhas.createtrilha)
 app.get('/trilha/get/aprovar', trilhas.getnotaprovedtrilhas)
 
 app.put('/trilha/aprove/:id', trilhas.getupdatetrilhaaprovacao)
+
+//////////// VERIFICAR SE UMA TRILHA JÁ É COMPLETA, USANGO UM GET \\\\\\\\\\\
+
+app.get('/trilha/verify/trilha/completebyuser/:id/:trilhaid', trilhas.getcompleteverify)
 
 ////////////////// ADICIONAR LOCAL Á TRILHA ////////////////
 
@@ -194,7 +198,7 @@ app.get('/embate/get/all', embates.getembates)
 
 app.post('/embate/create', embates.createuserembate)
 
-app.get('/embate/delete/:id', embates.deleteembate)
+app.delete('/embate/delete/:id', embates.deleteembate)
 
 /*app.post('/embate/delete', embates.deleteEmbate)
 app.post('/embate/criarEmbate', embates.createuserembate)
