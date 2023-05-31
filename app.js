@@ -97,7 +97,7 @@ app.post('/utilizador/report/trilha', users.createtrilhareport)
 
 ////// MUDAR TIPOS DE UTILIZADOR (SE ALGUEM SE TORNAR MODERADOR/PREMIUM) ///////
 
-app.post('/utilizador/update/user/type/:newtype/:id', users.updateusertype)
+app.put('/utilizador/update/user/type/:newtype/:id', users.updateusertype)
 
 /////////////////////////////////QUERIES DE TRILHAS///////////////////////////////////
 
