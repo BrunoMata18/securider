@@ -6,6 +6,7 @@ const client_envio = require('../models/connection')
 const bcrypt = require('bcrypt');
 
 const {compileTrust} = require("express/lib/utils");
+const e = require('express');
 
 /////////////// APAGAR TRILHA ////////////////
 
@@ -609,6 +610,8 @@ const getnumerocompletasuser = (req, res) => {
       console.log("Sucesso!");
     }
   };
+
+  ////CONTINUAR NESTA QUERY\\\\
 
   const getutilizadorcheckcompradotrilha = (req, res) => {
     const userId = req.params.id; // obtém o ID do usuário a partir da URL
